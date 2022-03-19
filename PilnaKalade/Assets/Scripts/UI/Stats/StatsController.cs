@@ -1,17 +1,24 @@
+using Assets.Scripts.UI.Stats;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StatsController : MonoBehaviour
 {
+    public StatusSpawner Spawner;
+
     public Bar HealthBar;
     public Bar ManaBar;
 
-    // Mock values for demonstration purposes
     void Start()
     {
+        // Mock values for demonstration purposes
         HealthBar.SetMaxValue(100);
         HealthBar.SetValue(42);
 
         ManaBar.SetMaxValue(100);
         ManaBar.SetValue(30);
+
+        Spawner.SpawnEffect(StatusEffectType.Mana);
+        Spawner.SpawnEffect(StatusEffectType.Health);
     }
 }
