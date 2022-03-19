@@ -6,6 +6,5 @@ namespace Assets.Scripts.UI.Stats
     {
         public StatusEffectType Type;
         public float LifeTime;
-        public string Title;
     }
 }
