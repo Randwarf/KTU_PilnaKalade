@@ -1,5 +1,4 @@
 using Assets.Scripts.UI.Stats;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StatsController : MonoBehaviour
@@ -18,6 +17,10 @@ public class StatsController : MonoBehaviour
         ManaBar.SetMaxValue(100);
         ManaBar.SetValue(30);
 
+        Spawner.SpawnEffect(StatusEffectType.Mana);
+        Spawner.SpawnEffect(StatusEffectType.Health);
+        Spawner.SpawnEffect(StatusEffectType.Mana);
+        Spawner.SpawnEffect(StatusEffectType.Health);
         Spawner.SpawnEffect(StatusEffectType.Mana);
         Spawner.SpawnEffect(StatusEffectType.Health);
     }

@@ -6,5 +6,15 @@ namespace Assets.Scripts.UI.Stats
     {
         public StatusEffectType Type;
         public float LifeTime;
+
+        void Start()
+        {
+            Destroy(gameObject, LifeTime);
+        }
+
+        public void SetLifeTime(float lifeTime)
+        {
+            LifeTime = lifeTime;
+        }
     }
 }

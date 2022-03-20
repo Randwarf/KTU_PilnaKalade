@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7916348075574409568}
   - component: {fileID: 5981701892808154242}
   - component: {fileID: 882308473631493822}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ManaStatusEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,4 +89,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  LifeTime: 12
+  LifeTime: 3

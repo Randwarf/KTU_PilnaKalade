@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  LifeTime: 102
+  LifeTime: 6
 --- !u!222 &352574170591283569
 CanvasRenderer:
   m_ObjectHideFlags: 0

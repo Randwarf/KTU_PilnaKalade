@@ -6,5 +6,6 @@ namespace Assets.Scripts.UI.Stats
     {
         Mana,
         Health,
+        TimeDecrease,
     }
 }
