@@ -5,6 +5,8 @@ using System.Linq;
 public class StatusSpawner : MonoBehaviour
 {
     public StatusEffect[] Effects;
+    public int RightPadding;
+
 
     private int _childrenCount;
 
@@ -36,7 +38,7 @@ public class StatusSpawner : MonoBehaviour
         {
             var lastChild = transform.GetChild(transform.childCount - 1);
 
-            nextPosition = new Vector3(lastChild.transform.position.x + ((RectTransform)lastChild.transform).rect.width,
+            nextPosition = new Vector3(lastChild.transform.position.x + ((RectTransform)lastChild.transform).rect.width + RightPadding,
                 lastChild.position.y);
         }
         
@@ -55,7 +57,7 @@ public class StatusSpawner : MonoBehaviour
             var child = transform.GetChild(i);
             if (prevChild != null)
             {
-                var nextPos = new Vector3(prevChild.transform.position.x + ((RectTransform)prevChild.transform).rect.width,
+                var nextPos = new Vector3(prevChild.transform.position.x + ((RectTransform)prevChild.transform).rect.width + RightPadding,
                     prevChild.transform.position.y);
 
                 child.position = nextPos;

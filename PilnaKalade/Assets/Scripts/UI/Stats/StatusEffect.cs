@@ -11,10 +11,5 @@ namespace Assets.Scripts.UI.Stats
         {
             Destroy(gameObject, LifeTime);
         }
-
-        public void SetLifeTime(float lifeTime)
-        {
-            LifeTime = lifeTime;
-        }
     }
 }
