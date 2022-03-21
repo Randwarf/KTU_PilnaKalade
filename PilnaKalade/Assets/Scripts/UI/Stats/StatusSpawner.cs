@@ -38,8 +38,7 @@ public class StatusSpawner : MonoBehaviour
         {
             var lastChild = transform.GetChild(transform.childCount - 1);
 
-            nextPosition = new Vector3(lastChild.transform.position.x + ((RectTransform)lastChild.transform).rect.width + RightPadding,
-                lastChild.position.y);
+            nextPosition = GetNextPositionFromChild(lastChild);
         }
         
         var effect = Instantiate(effectPrefab, nextPosition, Quaternion.identity);
@@ -57,10 +56,7 @@ public class StatusSpawner : MonoBehaviour
             var child = transform.GetChild(i);
             if (prevChild != null)
             {
-                var nextPos = new Vector3(prevChild.transform.position.x + ((RectTransform)prevChild.transform).rect.width + RightPadding,
-                    prevChild.transform.position.y);
-
-                child.position = nextPos;
+                child.position = GetNextPositionFromChild(prevChild);
             }
             else
             {
@@ -71,5 +67,11 @@ public class StatusSpawner : MonoBehaviour
         }
 
         _childrenCount = transform.childCount;
+    }
+
+    private Vector3 GetNextPositionFromChild(Transform child)
+    {
+        return new Vector3(child.transform.position.x + ((RectTransform)child.transform).rect.width + RightPadding,
+            child.transform.position.y);
     }
 }
