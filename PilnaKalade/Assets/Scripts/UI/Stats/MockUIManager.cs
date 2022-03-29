@@ -19,11 +19,16 @@ namespace Assets.Scripts.UI.Stats
             PlayerStatsController.SpawnEffect(StatusEffectType.Mana);
             PlayerStatsController.SpawnEffect(StatusEffectType.Health);
             PlayerStatsController.SpawnEffect(StatusEffectType.Mana);
+            PlayerStatsController.IncreaseBarValue(20, BarType.Defense);
 
             EnemyStatsController.SetMaxBarValue(100, BarType.Defense);
             EnemyStatsController.SetMaxBarValue(100, BarType.Health);
             EnemyStatsController.SetMaxBarValue(100, BarType.Mana);
             EnemyStatsController.DecreaseBarValue(66, BarType.Defense);
+            EnemyStatsController.SpawnEffect(StatusEffectType.Health);
+            EnemyStatsController.SpawnEffect(StatusEffectType.Mana);
+            EnemyStatsController.SpawnEffect(StatusEffectType.Mana);
+            EnemyStatsController.SpawnEffect(StatusEffectType.Health);
             EnemyStatsController.SpawnEffect(StatusEffectType.Mana);
         }
     }
