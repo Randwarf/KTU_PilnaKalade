@@ -4,20 +4,21 @@ using System.Linq;
 
 public class StatusSpawner : MonoBehaviour
 {
+    public Transform StatusContainer;
     public StatusEffect[] Effects;
-    public int RightPadding;
 
+    public int RightPadding;
 
     private int _childrenCount;
 
     void Start()
     {
-        _childrenCount = transform.childCount;
+        _childrenCount = StatusContainer.childCount;
     }
 
     private void Update()
     {
-        if(_childrenCount > transform.childCount)
+        if(_childrenCount > StatusContainer.childCount)
         {
             RecalculateChildrenPositions();
         }
@@ -32,46 +33,54 @@ public class StatusSpawner : MonoBehaviour
             throw new UnityException($"Effect of type: {effectType} does not exist in spawner");
         }
 
-        var nextPosition = transform.position;
-
-        if(transform.childCount != 0)
+        if(StatusContainer.childCount == 1) // StatusSpawner is container's child
         {
-            var lastChild = transform.GetChild(transform.childCount - 1);
-
-            nextPosition = GetNextPositionFromChild(lastChild);
+            var firstEffect = Instantiate(effectPrefab, StatusContainer.position, Quaternion.identity);
+            firstEffect.transform.SetParent(StatusContainer, false);
+            firstEffect.transform.position = transform.position;
+            
+            _childrenCount = StatusContainer.childCount;
+            
+            return;
         }
         
-        var effect = Instantiate(effectPrefab, nextPosition, Quaternion.identity);
-        effect.transform.SetParent(transform);
+        var prevChild = StatusContainer.GetChild(StatusContainer.childCount - 1);
 
-        _childrenCount = transform.childCount;
+        var effect = Instantiate(effectPrefab);
+        effect.transform.SetParent(StatusContainer, false);
+        effect.GetComponent<RectTransform>().anchoredPosition = GetNextAnchoredPositionFromChild(prevChild);
+
+        _childrenCount = StatusContainer.childCount;
     }
     
     private void RecalculateChildrenPositions()
     {
         Transform prevChild = null;
 
-        for (var i = 0; i < transform.childCount; i++)
+        for (var i = 1; i < StatusContainer.childCount; i++)
         {
-            var child = transform.GetChild(i);
-            if (prevChild != null)
+            var child = StatusContainer.GetChild(i);
+
+            if (prevChild == null)
             {
-                child.position = GetNextPositionFromChild(prevChild);
+                child.position = transform.position;
             }
             else
             {
-                child.position = transform.position;
+                child.GetComponent<RectTransform>().anchoredPosition = GetNextAnchoredPositionFromChild(prevChild);
             }
 
             prevChild = child;
         }
 
-        _childrenCount = transform.childCount;
+        _childrenCount = StatusContainer.childCount;
     }
 
-    private Vector3 GetNextPositionFromChild(Transform child)
+    private Vector2 GetNextAnchoredPositionFromChild(Transform child)
     {
-        return new Vector3(child.transform.position.x + ((RectTransform)child.transform).rect.width + RightPadding,
-            child.transform.position.y);
+        var prevChildRectTransform = child.GetComponent<RectTransform>();
+
+        return new Vector2(prevChildRectTransform.anchoredPosition.x + prevChildRectTransform.rect.width + RightPadding,
+            prevChildRectTransform.anchoredPosition.y);
     }
 }
