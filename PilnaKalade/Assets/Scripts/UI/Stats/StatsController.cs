@@ -1,5 +1,4 @@
 using Assets.Scripts.UI.Stats;
-using System.Collections;
 using UnityEngine;
 
 public class StatsController : MonoBehaviour
@@ -10,28 +9,39 @@ public class StatsController : MonoBehaviour
     public Bar HealthBar;
     public Bar ManaBar;
 
-    void Start()
+    public void SpawnEffect(StatusEffectType type)
     {
-        // Mock values for demonstration purposes
-        HealthBar.SetMaxValue(100);
-        HealthBar.SetValue(42);
-
-        ManaBar.SetMaxValue(100);
-        ManaBar.SetValue(30);
-
-        DefenseBar.SetMaxValue(100);
-
-        Spawner.SpawnEffect(StatusEffectType.Mana);
-        Spawner.SpawnEffect(StatusEffectType.Health);
-
-        StartCoroutine(ExampleCoroutine());
+        Spawner.SpawnEffect(type);
     }
 
-    IEnumerator ExampleCoroutine()
+    public void SetMaxBarValue(int maxValue, BarType type)
     {
-        yield return new WaitForSeconds(1);
+        GetBar(type).MaxValue = maxValue;
+    }
 
-        Spawner.SpawnEffect(StatusEffectType.Mana);
-        Spawner.SpawnEffect(StatusEffectType.Health);
+    public void SetBarValue(int value, BarType type)
+    {
+        GetBar(type).Value = value;
+    }
+
+    public void IncreaseBarValue(int value, BarType type)
+    {
+        GetBar(type).Value += value;
+    }
+
+    public void DecreaseBarValue(int value, BarType type)
+    {
+        GetBar(type).Value -= value;
+    }
+
+    private Bar GetBar(BarType type)
+    {
+        return type switch
+        {
+            BarType.Defense => DefenseBar,
+            BarType.Health => HealthBar,
+            BarType.Mana => ManaBar,
+            _ => null,
+        };
     }
 }
