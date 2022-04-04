@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +10,14 @@ public class Encyclopedia : MonoBehaviour
     void Start()
     {
         DisplayCards();
+    }
+
+    public void Open() {
+        transform.DOScale(1, 0.2f);
+    }
+
+    public void Close() {
+        transform.DOScale(0, 0.2f);
     }
 
     private void DisplayCards() {
