@@ -14,9 +14,10 @@ public class CardDatabase
     }
 
     public static void LoadCards() {
-        string jsonPath = $"{Application.dataPath}/Resources/{CARDS_DATA_FILE}";
-        var json = File.ReadAllText(jsonPath);
+        string jsonName = CARDS_DATA_FILE.Split('.')[0];
+        TextAsset jsonFile = Resources.Load<TextAsset>(jsonName);
         // Making json object out of array
+        var json = jsonFile.text;
         json = "{\"cards\":" + json + "}";
         Root jsonObject = JsonUtility.FromJson<Root>(json);
         cards = jsonObject.cards;
