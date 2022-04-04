@@ -9,5 +9,5 @@ public class CardData
     public int rarity;
     public string title;
     public string description;
-    public Stats stats;
+    public CardStats stats;
 }

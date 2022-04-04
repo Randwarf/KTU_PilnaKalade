@@ -1,7 +1,7 @@
 ﻿using System;
 
 [Serializable]
-public class Stats {
+public class CardStats {
     public int armor;
     public int damagemultiplier;
 }
