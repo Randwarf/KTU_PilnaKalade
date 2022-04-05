@@ -2247,6 +2247,7 @@ GameObject:
   - component: {fileID: 950902496}
   - component: {fileID: 950902495}
   - component: {fileID: 950902494}
+  - component: {fileID: 950902497}
   m_Layer: 5
   m_Name: NextTurnButton
   m_TagString: Untagged
@@ -2317,7 +2318,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 950902495}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950902497}
+        m_TargetAssemblyTypeName: NextTurnLogic, Assembly-CSharp
+        m_MethodName: ProcessTurn
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 7902597047339195964, guid: c3d4e109176742649ae4b652c719393e, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &950902495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2356,6 +2369,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950902492}
   m_CullTransparentMesh: 1
+--- !u!114 &950902497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950902492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f785b15bf79b844f9699c170e7229b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &962093513
 GameObject:
   m_ObjectHideFlags: 0
