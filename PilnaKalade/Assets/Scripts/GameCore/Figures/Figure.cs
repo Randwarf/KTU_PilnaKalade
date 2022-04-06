@@ -1,16 +1,22 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Figure : MonoBehaviour {
+public class Figure : MonoBehaviour
+{
     private Canvas canvas;
-    public EventSystem m_EventSystem;
-    public GraphicRaycaster m_Raycaster;
+    private EventSystem EventSystem;
+    private GraphicRaycaster Raycaster;
+
+    private int[,] figureMap;
+    private List<RawImage> figureTiles;
 
     void Start() {
         canvas = FindObjectOfType<Canvas>();
+        EventSystem = FindObjectOfType<EventSystem>();
+        Raycaster = FindObjectOfType<GraphicRaycaster>();
+        GetFigureTiles();
     }
 
     void Update() {
@@ -19,22 +25,54 @@ public class Figure : MonoBehaviour {
             canvas.worldCamera,
             out Vector2 pos);
 
+        // Add lerp?
         transform.localPosition = pos;
 
-        m_EventSystem = FindObjectOfType<EventSystem>();
-        m_Raycaster = FindObjectOfType<GraphicRaycaster>();
-        PointerEventData m_PointerEventData = new PointerEventData(m_EventSystem);
-        m_PointerEventData.position = transform.position;
-        List<RaycastResult> results = new List<RaycastResult>();
+        //if (Input.GetKeyDown(KeyCode.Space)) {
+            GameGrid grid = FindObjectOfType<GameGrid>();
+            grid.UnmarkTiles();
+            grid.MarkTiles(GetSelectedGridTiles(), Color.yellow);
+        //}
+    }
 
-        //Raycast using the Graphics Raycaster and mouse click position
-        m_Raycaster.Raycast(m_PointerEventData, results);
+    public void SetFigure(int[,] figureMap) {
+        this.figureMap = figureMap;
+    }
 
-        if (results.Count > 1) {
-            if (results[1].gameObject.CompareTag("Tile")) {
-                results[1].gameObject.GetComponent<Image>().color = Color.yellow;
-                Debug.Log("Hit " + results[1].gameObject.name);
+    private void GetFigureTiles() {
+        var allFigureTiles = GetComponentsInChildren<RawImage>();
+        figureTiles = new List<RawImage>();
+
+        for (int i = 0; i < figureMap.GetLength(0); i++) {
+            for (int j = 0; j < figureMap.GetLength(1); j++) {
+                if (figureMap[i, j] == 1) {
+                    int index = figureMap.GetLength(0) * i + j;
+                    figureTiles.Add(allFigureTiles[index]);
+                }
             }
         }
+    }
+
+    private List<int> GetSelectedGridTiles() {
+        List<int> selectedTiles = new List<int>();
+
+        foreach (RawImage figureTile in figureTiles) {
+            PointerEventData pointerEventData = new PointerEventData(EventSystem);
+            pointerEventData.position = figureTile.transform.position;
+            List<RaycastResult> results = new List<RaycastResult>();
+
+            //Raycast using the Graphics Raycaster and mouse click position
+            Raycaster.Raycast(pointerEventData, results);
+
+            // Jei resultat? tiek pat kiek tiles figuroje, tada placinimas viable
+            foreach (RaycastResult result in results) {
+                if (result.gameObject.CompareTag("Tile")) {
+                    int siblingIndex = result.gameObject.transform.GetSiblingIndex();
+                    selectedTiles.Add(siblingIndex);
+                }
+            }
+        }
+
+        return selectedTiles;
     }
 }

@@ -36,6 +36,6 @@ public class FigureMaker {
 
         figure.transform.localScale = Vector3.one;
         figure.transform.localPosition = position;
-        figure.AddComponent<Figure>();
+        figure.AddComponent<Figure>().SetFigure(figureMap);
     }
 }
