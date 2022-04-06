@@ -6,12 +6,11 @@ public class MainMenu : MonoBehaviour
     {
         TransitionController.TransitionTo(1);
     }
-    
-    public void OpenMenuScene()
+    public void OpenSettingsMenu()
     {
         TransitionController.TransitionTo(2);
     }
-    
+
     public void ExitGame() 
     {
         Application.Quit();
