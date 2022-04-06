@@ -5,22 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class TransitionController : MonoBehaviour
 {
-    public static void TransitionTo(int sceneIndex) {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+    private static Image transitionPanel;
+    private static int currentSceneIndex;
 
-        Image transitionPanel = SpawnTransitionPanel();
+    public static void TransitionTo(int sceneIndex) {
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        transitionPanel = SpawnTransitionPanel();
         transitionPanel.DOFade(1f, 0.5f).OnComplete(() => {
             SceneManager.LoadScene(sceneIndex, LoadSceneMode.Additive);
-            SceneManager.sceneLoaded += (scene, mode) => {
-                SceneManager.UnloadSceneAsync(currentSceneIndex).completed += (e) => {
-                    transitionPanel = SpawnTransitionPanel();
-                    transitionPanel.DOFade(1f, 0f);
-                    transitionPanel.DOFade(0f, 0.5f)
-                        .SetDelay(0.5f)
-                        .OnComplete(() => Destroy(transitionPanel.gameObject));
-                };
-            };
+            SceneManager.sceneLoaded += OnSceneLoaded;
         });
+    }
+
+    private static void OnSceneLoaded(Scene e, LoadSceneMode mode) {
+        SceneManager.UnloadSceneAsync(currentSceneIndex).completed += (e) => {
+            transitionPanel = SpawnTransitionPanel();
+            transitionPanel.DOFade(1f, 0f);
+            transitionPanel.DOFade(0f, 0.5f)
+                .SetDelay(0.5f)
+                .OnComplete(() => Destroy(transitionPanel.gameObject));
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        };
     }
 
     private static Image SpawnTransitionPanel() {
