@@ -1,8 +1,9 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FigureMaker {
-    public static void SpawnFigure(int[,] figureMap, Canvas canvas, Vector2 position) {
+    public static Figure SpawnFigure(int[,] figureMap, Canvas canvas, Vector2 position) {
         GameObject figure = new GameObject("Figure");
         figure.transform.SetParent(canvas.transform);
 
@@ -30,6 +31,7 @@ public class FigureMaker {
                     squareRI.color = new Color(0, 0, 0, 0);
                 } else {
                     squareRI.color = Color.cyan;
+                    squareRI.DOFade(0, 0);
                 }
             }
         }
@@ -37,5 +39,6 @@ public class FigureMaker {
         figure.transform.localScale = Vector3.one;
         figure.transform.localPosition = position;
         figure.AddComponent<Figure>().SetFigure(figureMap);
+        return figure.GetComponent<Figure>();
     }
 }

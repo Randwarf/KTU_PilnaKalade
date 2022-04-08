@@ -4,6 +4,7 @@
 		"id": "triangle",
 		"title": "Triangle",
 		"description": "Triangle description",
+		"figureMap": "010 111",
 		"stats": {
 			"armor": 50,
 			"damagemultiplier": 25
@@ -14,86 +15,18 @@
 		"id": "square",
 		"title": "Square",
 		"description": "Square description",
+		"figureMap": "11 11",
 		"stats": {
 			"armor": 50,
 			"damagemultiplier": 25
 		}
 	},
 	{
-		"key": 2,
-		"id": "square",
-		"title": "Square",
-		"description": "Square description",
-		"stats": {
-			"armor": 50,
-			"damagemultiplier": 25
-		}
-	},
-	{
-		"key": 2,
-		"id": "square",
-		"title": "Square",
-		"description": "Square description",
-		"stats": {
-			"armor": 50,
-			"damagemultiplier": 25
-		}
-	},
-	{
-		"key": 2,
-		"id": "square",
-		"title": "Square",
-		"description": "Square description",
-		"stats": {
-			"armor": 50,
-			"damagemultiplier": 25
-		}
-	},
-	{
-		"key": 2,
-		"id": "square",
-		"title": "Square",
-		"description": "Square description",
-		"stats": {
-			"armor": 50,
-			"damagemultiplier": 25
-		}
-	},
-	{
-		"key": 2,
-		"id": "square",
-		"title": "Square",
-		"description": "Square description",
-		"stats": {
-			"armor": 50,
-			"damagemultiplier": 25
-		}
-	},
-	{
-		"key": 2,
-		"id": "square",
-		"title": "Square",
-		"description": "Square description",
-		"stats": {
-			"armor": 50,
-			"damagemultiplier": 25
-		}
-	},
-	{
-		"key": 2,
-		"id": "square",
-		"title": "Square",
-		"description": "Square description",
-		"stats": {
-			"armor": 50,
-			"damagemultiplier": 25
-		}
-	},
-	{
-		"key": 2,
-		"id": "square",
-		"title": "Square",
-		"description": "Square description",
+		"key": 3,
+		"id": "letter_t",
+		"title": "Letter T",
+		"description": "Letter T description",
+		"figureMap": "111 010 010",
 		"stats": {
 			"armor": 50,
 			"damagemultiplier": 25
