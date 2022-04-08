@@ -18,5 +18,85 @@
 			"armor": 50,
 			"damagemultiplier": 25
 		}
+	},
+	{
+		"key": 2,
+		"id": "square",
+		"title": "Square",
+		"description": "Square description",
+		"stats": {
+			"armor": 50,
+			"damagemultiplier": 25
+		}
+	},
+	{
+		"key": 2,
+		"id": "square",
+		"title": "Square",
+		"description": "Square description",
+		"stats": {
+			"armor": 50,
+			"damagemultiplier": 25
+		}
+	},
+	{
+		"key": 2,
+		"id": "square",
+		"title": "Square",
+		"description": "Square description",
+		"stats": {
+			"armor": 50,
+			"damagemultiplier": 25
+		}
+	},
+	{
+		"key": 2,
+		"id": "square",
+		"title": "Square",
+		"description": "Square description",
+		"stats": {
+			"armor": 50,
+			"damagemultiplier": 25
+		}
+	},
+	{
+		"key": 2,
+		"id": "square",
+		"title": "Square",
+		"description": "Square description",
+		"stats": {
+			"armor": 50,
+			"damagemultiplier": 25
+		}
+	},
+	{
+		"key": 2,
+		"id": "square",
+		"title": "Square",
+		"description": "Square description",
+		"stats": {
+			"armor": 50,
+			"damagemultiplier": 25
+		}
+	},
+	{
+		"key": 2,
+		"id": "square",
+		"title": "Square",
+		"description": "Square description",
+		"stats": {
+			"armor": 50,
+			"damagemultiplier": 25
+		}
+	},
+	{
+		"key": 2,
+		"id": "square",
+		"title": "Square",
+		"description": "Square description",
+		"stats": {
+			"armor": 50,
+			"damagemultiplier": 25
+		}
 	}
 ]

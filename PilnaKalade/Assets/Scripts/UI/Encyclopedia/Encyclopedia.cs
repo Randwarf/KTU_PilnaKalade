@@ -1,11 +1,14 @@
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Encyclopedia : MonoBehaviour
 {
     public GameObject CardPrefab;
     public Transform CardGrid;
+
+    public CanvasGroup CanvasGroup;
 
     void Start()
     {
@@ -13,11 +16,12 @@ public class Encyclopedia : MonoBehaviour
     }
 
     public void Open() {
-        transform.DOScale(1, 0.2f);
+        gameObject.SetActive(true);
+        CanvasGroup.DOFade(1f, 0.2f);
     }
 
     public void Close() {
-        transform.DOScale(0, 0.2f);
+        CanvasGroup.DOFade(0f, 0.2f).OnComplete(() => gameObject.SetActive(false));
     }
 
     private void DisplayCards() {
