@@ -40,6 +40,6 @@ public class GameGrid : MonoBehaviour
             placedTiles.Add(index);
         }
 
-        UIManager.ShowPredictionDamagePoints(indexes.Count * 10, false);
+        UIManager.ShowPredictionDamagePoints(indexes.Count * 9, false);
     }
 }
