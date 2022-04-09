@@ -1,9 +1,12 @@
+using Assets.Scripts.UI.Stats;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameGrid : MonoBehaviour
 {
+    public UIManager UIManager;
+    
     private Image[] tiles;
     private List<int> markedTiles;
     private List<int> placedTiles;
@@ -31,9 +34,12 @@ public class GameGrid : MonoBehaviour
 
     public void PlaceTiles(List<int> indexes, Color color) {
         markedTiles.Clear();
+        
         foreach (int index in indexes) {
             tiles[index].color = color;
             placedTiles.Add(index);
         }
+
+        UIManager.ShowPredictionDamagePoints(indexes.Count * 10, false);
     }
 }
