@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 669690152825061317}
   - component: {fileID: 3798539031308762633}
   - component: {fileID: 5385043879895503525}
-  - component: {fileID: 2725715160907903226}
   - component: {fileID: 7833123209974740346}
+  - component: {fileID: -7101805041216552296}
   m_Layer: 5
-  m_Name: Card
+  m_Name: EncyclopediaCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,22 +95,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &2725715160907903226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 97727787706448304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd0679f0a8b36f94096460c2f44e6f35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Cost: {fileID: 6320029710505965001}
-  Description: {fileID: 1279085228092086178}
-  DescriptionPanel: {fileID: 6258669898012640563}
-  CanvasGroup: {fileID: 7833123209974740346}
 --- !u!225 &7833123209974740346
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -123,6 +107,21 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &-7101805041216552296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97727787706448304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b90a92eddf3ec244a0564e4858e8e29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: {fileID: 6320029710505965001}
+  Description: {fileID: 1279085228092086178}
+  DescriptionPanel: {fileID: 6258669898012640563}
 --- !u!1 &4075664219595935020
 GameObject:
   m_ObjectHideFlags: 0
