@@ -1711,7 +1711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 865d952eae380024f945bbf5da6371cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardPrefab: {fileID: 97727787706448304, guid: 91e5a426855c47642a23fb2f92cb5647, type: 3}
+  CardPrefab: {fileID: 97727787706448304, guid: e8492c845b9316642b7b24e68903d7bd, type: 3}
   CardGrid: {fileID: 1313868520}
   CanvasGroup: {fileID: 1206266532}
 --- !u!225 &1206266532

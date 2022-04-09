@@ -38,9 +38,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         Description.text = cardData.description;
     }
 
-    // DOTween should take anchor points into consideration
-    // when using LocalMove, but for some reason it doesn't,
-    // so that's why I had to locally move it to half the card's heigth
+    /* Description panel animation */
     public void OnPointerEnter(PointerEventData eventData) {
         DescriptionPanel.DOLocalMoveY(-cardHeigth / 2, 0.2f);
     }
@@ -48,6 +46,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public void OnPointerExit(PointerEventData eventData) {
         DescriptionPanel.DOLocalMoveY(-descPanelHeight - cardHeigth / 2, 0.2f);
     }
+    /* */
 
     public void OnBeginDrag(PointerEventData eventData) {
         cardData = new CardData {

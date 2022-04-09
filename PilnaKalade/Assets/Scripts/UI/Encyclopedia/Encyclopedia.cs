@@ -28,7 +28,7 @@ public class Encyclopedia : MonoBehaviour
         List<CardData> cards = CardDatabase.GetCards();
         foreach (CardData cardData in cards) {
             GameObject cardGO = Instantiate(CardPrefab, CardGrid);
-            Card card = cardGO.GetComponent<Card>();
+            EncyclopediaCard card = cardGO.GetComponent<EncyclopediaCard>();
             card.SetData(cardData);
             card.UpdateVisuals();
         }
