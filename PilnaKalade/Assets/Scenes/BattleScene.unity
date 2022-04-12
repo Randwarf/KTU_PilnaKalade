@@ -4503,8 +4503,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Encyclopedia, Assembly-CSharp
+      - m_Target: {fileID: 996338427}
+        m_TargetAssemblyTypeName: DeckView, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
         m_Arguments:
