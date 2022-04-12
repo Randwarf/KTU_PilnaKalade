@@ -14,7 +14,7 @@ public class PlayerDeck : MonoBehaviour
         for (int i = 0; i < 20; i++)
         {
             x = Random.Range(0,4);
-            deck[i] = CardDatabase.GetCard(x);
+            deck.Add(CardDatabase.GetCard(x));
         }
     }
     public static List<CardData> GetDeck()
@@ -25,6 +25,6 @@ public class PlayerDeck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
