@@ -7,7 +7,7 @@ public class NextTurnLogic : MonoBehaviour
 {
     public void ProcessTurn(GameObject cardPrefab)
     {
-        DrawNewHand(6, cardPrefab);
+        DrawNewHand(4, cardPrefab);
     }
 
     private void DrawNewHand(int handSize, GameObject cardPrefab)
