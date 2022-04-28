@@ -31,5 +31,16 @@
 			"armor": 50,
 			"damagemultiplier": 25
 		}
+	},
+	{
+		"key": 4,
+		"id": "letter_l",
+		"title": "Letter L",
+		"description": "Letter L description",
+		"figureMap": "10 10 11",
+		"stats": {
+			"armor": -25,
+			"damagemultiplier": 50
+		}
 	}
 ]

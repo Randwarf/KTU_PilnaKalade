@@ -3565,10 +3565,10 @@ MonoBehaviour:
       - m_Target: {fileID: 950902497}
         m_TargetAssemblyTypeName: NextTurnLogic, Assembly-CSharp
         m_MethodName: ProcessTurn
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 97727787706448304, guid: 91e5a426855c47642a23fb2f92cb5647, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3624,6 +3624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f785b15bf79b844f9699c170e7229b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 97727787706448304, guid: 91e5a426855c47642a23fb2f92cb5647, type: 3}
 --- !u!1 &961479105
 GameObject:
   m_ObjectHideFlags: 0

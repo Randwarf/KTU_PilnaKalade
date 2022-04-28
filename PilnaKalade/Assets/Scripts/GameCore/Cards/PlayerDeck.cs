@@ -10,6 +10,10 @@ public class PlayerDeck : MonoBehaviour
     void Start()
     {
         x = 0;
+        //We are technically loading the database twice.
+        //once on main menu start and once when we enter battle scene.
+        //Removing this load however, prevents us from directly starting the game
+        //at the battle scene during the development
         CardDatabase.LoadCards();
         int count = CardDatabase.GetCount();
         for (int i = 0; i < 20; i++)
