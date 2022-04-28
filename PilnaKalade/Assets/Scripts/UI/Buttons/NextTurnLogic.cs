@@ -5,35 +5,30 @@ using UnityEngine;
 
 public class NextTurnLogic : MonoBehaviour
 {
-    public void ProcessTurn(GameObject cardPrefab)
+    public GameObject cardPrefab;
+
+    public void ProcessTurn()
     {
-        DrawNewHand(4, cardPrefab);
+        DrawNewHand(4);
     }
 
-    private void DrawNewHand(int handSize, GameObject cardPrefab)
+    private void DrawNewHand(int handSize)
     {
         DiscardHand();
         for(int i = 0; i < handSize; i++)
         {
-            DrawNewCard(cardPrefab);
+            DrawNewCard(PlayerDeck.DrawRandom());
         }
     }
 
-    private void DrawNewCard(GameObject cardPrefab)
+    private void DrawNewCard(CardData data)
     {
-        //TODO: Update it to draw from deck instead of randomising
         var hand = GetHand().transform;
         GameObject card = Instantiate(cardPrefab, hand);
         card.transform.localScale = card.transform.localScale * 0.15f;
-
-        string[] randomDescriptions = new string[] { "Lorem Ipsum", "Swing wildly", "Bottoms up!", "Slash", "Nothing personel, kiddo" };
-        var desc = card.transform.Find("Description Panel");
-        desc = desc.transform.Find("Description");
-        int descriptionNumber = UnityEngine.Random.Range(0, randomDescriptions.Length);
-        desc.GetComponent<TMPro.TextMeshProUGUI>().text = randomDescriptions[descriptionNumber];
-
-        var cost = card.transform.Find("Cost");
-        cost.GetComponent<TMPro.TextMeshProUGUI>().text = UnityEngine.Random.Range(0, 6).ToString();
+        var cardScript = card.GetComponent<Card>();
+        cardScript.SetData(data);
+        cardScript.UpdateVisuals();
     }
 
     private void DiscardHand()
@@ -48,5 +43,10 @@ public class NextTurnLogic : MonoBehaviour
     private GameObject GetHand()
     {
         return GameObject.Find("Hand");
+    }
+
+    public void Start()
+    {
+        DrawNewHand(4);
     }
 }

@@ -49,9 +49,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     /* */
 
     public void OnBeginDrag(PointerEventData eventData) {
-        cardData = new CardData {
-            figureMap = "111 010 010"
-        };
+        //cardData = new CardData {
+        //    figureMap = "111 010 010"
+        //};
         int[,] figureMap = cardData.GetFigureMap();
         CanvasGroup.DOFade(0f, 0.2f);
         figure = FigureMaker.SpawnFigure(figureMap, FindObjectOfType<Canvas>(), Vector2.zero);

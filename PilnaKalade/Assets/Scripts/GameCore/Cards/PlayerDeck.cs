@@ -11,15 +11,22 @@ public class PlayerDeck : MonoBehaviour
     {
         x = 0;
         CardDatabase.LoadCards();
+        int count = CardDatabase.GetCount();
         for (int i = 0; i < 20; i++)
         {
-            x = Random.Range(1, 3);
+            x = Random.Range(0, count);
             deck.Add(CardDatabase.GetCard(x));
         }
     }
     public static List<CardData> GetDeck()
     {
         return deck;
+    }
+
+    public static CardData DrawRandom()
+    {
+        int randomIndex = Random.Range(0, deck.Count);
+        return deck[randomIndex];
     }
 
     // Update is called once per frame
