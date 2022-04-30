@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using TMPro;
 
 public class CardManager : MonoBehaviour
 {
@@ -17,12 +18,12 @@ public class CardManager : MonoBehaviour
     void Awake()
     {
         hand = GameObject.Find("Hand");
-
         NoCardsDrawnAfterDiscard = true;
-        GameObject.FindGameObjectsWithTag("Card")
-            .Select(gameObject => gameObject.GetComponent<Card>())
-            .ToList()
-            .ForEach(card => card.onUse.AddListener(OnCardUse));
+
+        var cards = GameObject.FindGameObjectsWithTag("Card")
+            .Select(gameObject => gameObject.GetComponent<Card>());
+        foreach(var card in cards)
+            card.onUse.AddListener(OnCardUse);
     }
 
     public void DrawNewHand()
@@ -42,28 +43,24 @@ public class CardManager : MonoBehaviour
     private void DrawNewCard()
     {
         //TODO: Update it to draw from deck instead of randomising
-        var handTransform = hand.transform;
-        GameObject card = Instantiate(cardPrefab, handTransform);
+        GameObject card = Instantiate(cardPrefab, hand.transform);
         card.transform.localScale = card.transform.localScale * 0.15f;
         card.GetComponent<Card>().onUse.AddListener(OnCardUse);
 
         string[] randomDescriptions = new string[] { "Lorem Ipsum", "Swing wildly", "Bottoms up!", "Slash", "Nothing personel, kiddo" };
-        var desc = card.transform.Find("Description Panel");
-        desc = desc.transform.Find("Description");
-        int descriptionNumber = UnityEngine.Random.Range(0, randomDescriptions.Length);
-        desc.GetComponent<TMPro.TextMeshProUGUI>().text = randomDescriptions[descriptionNumber];
+        var description = card.transform.Find("Description Panel")
+            .transform.Find("Description");
+        int descriptionNumber = Random.Range(0, randomDescriptions.Length);
+        description.GetComponent<TextMeshProUGUI>().text = randomDescriptions[descriptionNumber];
 
         var cost = card.transform.Find("Cost");
-        cost.GetComponent<TMPro.TextMeshProUGUI>().text = UnityEngine.Random.Range(0, 6).ToString();
+        cost.GetComponent<TextMeshProUGUI>().text = Random.Range(0, 6).ToString();
     }
 
     private void DiscardHand()
     {
-        var handTransform = hand.transform;
-        foreach (Transform child in handTransform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
+        foreach (Transform child in hand.transform)
+            Destroy(child.gameObject);
 
         NoCardsDrawnAfterDiscard = true;
         onNoCardsDrawnAfterDiscardChange.Invoke();
