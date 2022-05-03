@@ -1,11 +1,14 @@
-using Assets.Scripts.Constants;
-using Assets.Scripts.Settings;
-using System;
+using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.Settings;
+using System;
 
-public class SettingsMenu : MonoBehaviour
+public class BattleSettings : MonoBehaviour
 {
+    public CanvasGroup CanvasGroup;
+
     public Toggle FullscreenToggle;
 
     public Dropdown ResolutionDropdown;
@@ -18,11 +21,6 @@ public class SettingsMenu : MonoBehaviour
         InitSettings();
         InitToggle();
         InitResolutionDropdown();
-    }
-
-    public void OpenMainMenuScene()
-    {
-        TransitionController.TransitionTo(Scenes.MainMenu);
     }
 
     public void ToggleFullscreen()
@@ -43,7 +41,7 @@ public class SettingsMenu : MonoBehaviour
     {
         var resolutionText = ResolutionDropdown.options[ResolutionDropdown.value].text;
         var parts = resolutionText.Split(' ');
-        
+
         var newWidth = Convert.ToInt32(parts[0]);
         var newHeight = Convert.ToInt32(parts[2]);
 
@@ -63,7 +61,7 @@ public class SettingsMenu : MonoBehaviour
 
     private void InitToggle()
     {
-        if(FullscreenToggle.isOn == _activeSettings.IsFullscreen)
+        if (FullscreenToggle.isOn == _activeSettings.IsFullscreen)
         {
             _toggleEmittedFirstEvent = true;
         }
@@ -82,5 +80,17 @@ public class SettingsMenu : MonoBehaviour
         ResolutionDropdown.interactable = false;
         ResolutionDropdown.value = ResolutionDropdown.options.FindIndex(option => option.text == resolutionString);
         ResolutionDropdown.interactable = true;
+    }
+
+    public void Open()
+    {
+        gameObject.SetActive(true);
+        CanvasGroup.DOFade(1f, 0.2f);
+        Awake();
+    }
+
+    public void Close()
+    {
+        CanvasGroup.DOFade(0f, 0.2f).OnComplete(() => gameObject.SetActive(false));
     }
 }
