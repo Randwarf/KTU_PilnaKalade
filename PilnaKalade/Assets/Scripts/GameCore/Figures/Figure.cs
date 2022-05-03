@@ -82,4 +82,8 @@ public class Figure : MonoBehaviour
 
         return selectedTiles;
     }
+
+    void OnDestroy() {
+        figureTiles.ForEach(tile => tile.DOKill());
+    }
 }

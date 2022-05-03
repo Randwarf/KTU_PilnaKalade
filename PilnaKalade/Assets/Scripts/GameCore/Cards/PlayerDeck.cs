@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDeck : MonoBehaviour
+public static class PlayerDeck
 {
     private static List<CardData> deck = new List<CardData>();
 
-    void Awake()
-    {
+    public static void LoadIfUnloaded() {
         if(deck.Count == 0) {
             CardDatabase.LoadCards();
             int count = CardDatabase.GetCount();
