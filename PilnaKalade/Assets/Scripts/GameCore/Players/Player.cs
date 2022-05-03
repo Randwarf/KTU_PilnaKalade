@@ -2,7 +2,6 @@
 
 namespace Assets.Scripts.GameCore.Players
 {
-    // TODO: move to initialization
     public class Player : MonoBehaviour
     {
         public int Health;
