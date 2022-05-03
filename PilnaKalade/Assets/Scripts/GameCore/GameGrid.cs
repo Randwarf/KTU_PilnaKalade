@@ -6,8 +6,6 @@ using UnityEngine.Events;
 
 public class GameGrid : MonoBehaviour
 {
-    public UIManager UIManager;
-    
     private Image[] tiles;
     private List<int> markedTiles;
 
@@ -50,8 +48,6 @@ public class GameGrid : MonoBehaviour
             tiles[index].color = color;
             placedTiles.Add(index);
         }
-
-        UIManager.ShowPredictionDamagePoints(indexes.Count * 9, false);
 
         onTilePlacementChanges.Invoke();
     }
