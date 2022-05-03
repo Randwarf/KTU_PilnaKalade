@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
     {
         TransitionController.TransitionTo(Scenes.BattleScene);
     }
+
     public void OpenSettingsMenu()
     {
         TransitionController.TransitionTo(Scenes.SettingsMenu);

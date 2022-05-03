@@ -7,13 +7,6 @@ namespace Assets.Scripts.UI.Stats
         public StatsController EnemyStatsController;
         public StatsController PlayerStatsController;
 
-        // Sample values for demonstration
-        private void Start()
-        {
-            InitBarValues(100, 100, 100, true);
-            InitBarValues(100, 100, 100, false);
-        }
-
         public void InitBarValues(int maxDefenseValue, int maxHealthValue, int maxManaValue, bool forPlayer)
         {
             if(!forPlayer)
@@ -30,24 +23,34 @@ namespace Assets.Scripts.UI.Stats
             PlayerStatsController.SetMaxBarValue(maxManaValue, BarType.Mana);
         }
 
+        public void InitPlayerBarValue(int maxValue, BarType type)
+        {
+            PlayerStatsController.SetMaxBarValue(maxValue, type);
+        }
+
         public void ShowPredictionDamagePoints(int potentialNextTurnDamagePoints, bool playerTurn)
         {
             GetCurrentStatsController(playerTurn).SetDamagePredictionPoints(potentialNextTurnDamagePoints);
         }
 
-        public void ConfirmDamagePredictionPoints(bool playerTurn)
+        public void ShowPredictionManaPoints(int potentialNextTurnManaPoints, bool playerTurn)
         {
-            GetCurrentStatsController(playerTurn).ConfirmDamagePredictionPoints();
+            GetCurrentStatsController(!playerTurn).SetManaPredictionPoints(potentialNextTurnManaPoints);
         }
 
-        public void CancelDamagePredictionPoints(bool playerTurn)
+        public void ConfirmPredictionPoints(bool playerTurn)
         {
-            GetCurrentStatsController(playerTurn).CancelDamagePredictionPoints();
+            GetCurrentStatsController(playerTurn).ConfirmPredictionPoints();
+        }
+
+        public void CancelPredictionPoints(bool playerTurn)
+        {
+            GetCurrentStatsController(playerTurn).CancelPredictionPoints();
         }
 
         private StatsController GetCurrentStatsController(bool playerTurn)
         {
-            if (!playerTurn)
+            if (playerTurn)
             {
                 return EnemyStatsController;
             }
