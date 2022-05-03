@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7833123209974740346}
   m_Layer: 5
   m_Name: Card
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +110,6 @@ MonoBehaviour:
   Cost: {fileID: 6320029710505965001}
   Description: {fileID: 1279085228092086178}
   DescriptionPanel: {fileID: 6258669898012640563}
-  CanvasGroup: {fileID: 7833123209974740346}
 --- !u!225 &7833123209974740346
 CanvasGroup:
   m_ObjectHideFlags: 0
