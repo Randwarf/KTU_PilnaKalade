@@ -83,6 +83,11 @@ namespace Assets.Scripts.GameCore.Players
             _uiManager.InitPlayerBarValue(_previousMana, BarType.Mana);
         }
 
+        public bool CanPlaceCard(CardData cardData)
+        {
+            return _player.Mana >= cardData.cost;
+        }
+
         private Player GetPlayer(bool playerTurn)
         {
             return playerTurn ? _enemyPlayer : _player;

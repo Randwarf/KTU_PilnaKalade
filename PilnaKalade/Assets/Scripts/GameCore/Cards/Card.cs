@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using Assets.Scripts.GameCore.Players;
 
 public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                                     IBeginDragHandler, IEndDragHandler, IDragHandler
@@ -22,6 +23,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     private CardData cardData;
     private Figure figure;
 
+    private PlayerManager playerManager;
+
     private void Start() {
         RectTransform descPanelRect = (RectTransform)DescriptionPanel;
         RectTransform cardPanelRect = (RectTransform)transform;
@@ -30,6 +33,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
         CanvasGroup = GetComponent<CanvasGroup>();
         canvas = FindObjectOfType<Canvas>();
+        playerManager = GameObject.FindWithTag("PlayerManager").GetComponent<PlayerManager>();
     }
 
     public void SetData(CardData cardData) {
@@ -52,6 +56,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     /* */
 
     public void OnBeginDrag(PointerEventData eventData) {
+        if (!playerManager.CanPlaceCard(cardData))
+        {
+            return;
+        }
+
         cardData.figureMap = "111 010 010";
         int[,] figureMap = cardData.GetFigureMap();
         CanvasGroup.DOFade(0f, 0.2f);
@@ -60,6 +69,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        if (!playerManager.CanPlaceCard(cardData))
+        {
+            return;
+        }
+
         bool successful = figure.PlaceFigure();
         Destroy(figure.gameObject);
 
@@ -72,6 +86,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     }
 
     public void OnDrag(PointerEventData eventData) {
+        if (!playerManager.CanPlaceCard(cardData))
+        {
+            return;
+        }
+
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvas.transform as RectTransform, Input.mousePosition,
             canvas.worldCamera,
