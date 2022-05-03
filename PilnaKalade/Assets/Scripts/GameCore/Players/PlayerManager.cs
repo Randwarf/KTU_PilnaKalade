@@ -63,7 +63,7 @@ namespace Assets.Scripts.GameCore.Players
             _playerTurn = !_playerTurn; // End player turn, start enemy turn
             
             var enemy = GetPlayer(_playerTurn);
-            var randomDamage = 30;
+            var randomDamage = Random.Range(10, 50);
             enemy.Defense -= randomDamage;
             
             if(enemy.Defense <= randomDamage)
