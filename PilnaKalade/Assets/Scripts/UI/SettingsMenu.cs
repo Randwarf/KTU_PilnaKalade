@@ -1,3 +1,4 @@
+using Assets.Scripts.Constants;
 using Assets.Scripts.Settings;
 using System;
 using UnityEngine;
@@ -21,7 +22,7 @@ public class SettingsMenu : MonoBehaviour
 
     public void OpenMainMenuScene()
     {
-        TransitionController.TransitionTo(0);
+        TransitionController.TransitionTo(Scenes.MainMenu);
     }
 
     public void ToggleFullscreen()

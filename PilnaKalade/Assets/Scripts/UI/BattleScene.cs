@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts.Constants;
 using UnityEngine;
 
 public class BattleScene : MonoBehaviour
 {
-    public void OpenSettingsMenu()
+    public void OpenMainMenu()
     {
-        TransitionController.TransitionTo(2);
+        TransitionController.TransitionTo(Scenes.MainMenu);
     }
-
 }
