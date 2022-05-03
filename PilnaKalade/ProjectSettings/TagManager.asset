@@ -8,6 +8,9 @@ TagManager:
   - Grid
   - Card
   - CardManager
+  - UIManager
+  - Enemy
+  - NextTurnButton
   layers:
   - Default
   - TransparentFX
