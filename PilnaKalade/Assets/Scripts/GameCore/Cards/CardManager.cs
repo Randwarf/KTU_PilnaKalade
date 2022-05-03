@@ -18,7 +18,7 @@ public class CardManager : MonoBehaviour
     private GameObject hand;
 
 
-    void Awake()
+    void Start()
     {
         hand = GameObject.Find("Hand");
         NoCardsDrawnAfterDiscard = true;

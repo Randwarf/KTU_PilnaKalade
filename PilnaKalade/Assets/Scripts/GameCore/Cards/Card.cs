@@ -22,7 +22,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public UnityEvent<CardData> onUse = new UnityEvent<CardData>();
 
-    private void Awake() {
+    private void Start() {
         RectTransform descPanelRect = (RectTransform)DescriptionPanel;
         RectTransform cardPanelRect = (RectTransform)transform;
         cardHeigth = cardPanelRect.rect.height;
