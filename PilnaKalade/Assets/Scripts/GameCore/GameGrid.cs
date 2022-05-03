@@ -20,6 +20,10 @@ public class GameGrid : MonoBehaviour
         tiles = GetComponentsInChildren<Image>();
     }
 
+    public bool IsTileOccupied(int index) {
+        return placedTiles.Contains(index);
+    }
+
     public float GetPlacedTilesProportion()
     {
         if (tiles is null || placedTiles is null)
