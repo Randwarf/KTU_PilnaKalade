@@ -11,6 +11,7 @@ namespace Assets.Scripts.GameCore.Players
         private Player _enemyPlayer;
 
         private bool _playerTurn;
+        private int _previousMana;
 
         private UIManager _uiManager;
 
@@ -32,6 +33,8 @@ namespace Assets.Scripts.GameCore.Players
 
             _cardManager = GameObject.FindWithTag("CardManager").GetComponent<CardManager>();
             _cardManager.OnCardEndUse.AddListener(UpdateState);
+
+            _previousMana = _player.Mana;
 
             _uiManager.InitBarValues(_player.Defense, _player.Health, _player.Mana, true);
             _uiManager.InitBarValues(_enemyPlayer.Defense, _enemyPlayer.Health, _enemyPlayer.Mana, false);
@@ -74,6 +77,10 @@ namespace Assets.Scripts.GameCore.Players
             _uiManager.ConfirmPredictionPoints(_playerTurn);
 
             _playerTurn = !_playerTurn; // End enemy turn, start player turn
+
+            // Reseting mana
+            _player.Mana = _previousMana;
+            _uiManager.InitPlayerBarValue(_previousMana, BarType.Mana);
         }
 
         private Player GetPlayer(bool playerTurn)

@@ -23,6 +23,11 @@ namespace Assets.Scripts.UI.Stats
             PlayerStatsController.SetMaxBarValue(maxManaValue, BarType.Mana);
         }
 
+        public void InitPlayerBarValue(int maxValue, BarType type)
+        {
+            PlayerStatsController.SetMaxBarValue(maxValue, type);
+        }
+
         public void ShowPredictionDamagePoints(int potentialNextTurnDamagePoints, bool playerTurn)
         {
             GetCurrentStatsController(playerTurn).SetDamagePredictionPoints(potentialNextTurnDamagePoints);

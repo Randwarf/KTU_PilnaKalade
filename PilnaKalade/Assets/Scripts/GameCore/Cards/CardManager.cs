@@ -31,7 +31,7 @@ public class CardManager : MonoBehaviour
             // TODO: Update it to set values from deck instead of randomising
             card.SetData(new CardData
             {
-                cost = Random.Range(1, 10),
+                cost = Random.Range(1, 3),
                 stats = new CardStats
                 {
                     armor = Random.Range(1, 10),
@@ -68,7 +68,7 @@ public class CardManager : MonoBehaviour
         cardComponent.onUse.AddListener(OnCardUse);
         cardComponent.SetData(new CardData
         {
-            cost = Random.Range(0, 10),
+            cost = Random.Range(1, 3),
             stats = new CardStats
             {
                 armor = Random.Range(0, 10),
