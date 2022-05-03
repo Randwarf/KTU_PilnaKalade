@@ -7,4 +7,9 @@ public class BattleScene : MonoBehaviour
     {
         TransitionController.TransitionTo(Scenes.MainMenu);
     }
+
+    public void Reload()
+    {
+        TransitionController.TransitionTo(Scenes.BattleScene);
+    }
 }
