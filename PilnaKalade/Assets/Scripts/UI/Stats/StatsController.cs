@@ -14,16 +14,18 @@ public class StatsController : MonoBehaviour
         Spawner.SpawnEffect(type);
     }
 
-    public void ConfirmDamagePredictionPoints()
+    public void ConfirmPredictionPoints()
     {
         DefenseBar.CompleteSynchronization();
         HealthBar.CompleteSynchronization();
+        ManaBar.CompleteSynchronization();
     }
 
-    public void CancelDamagePredictionPoints()
+    public void CancelPredictionPoints()
     {
         DefenseBar.CancelSynchronization();
         HealthBar.CancelSynchronization();
+        ManaBar.CancelSynchronization();
     }
 
     public void SetDamagePredictionPoints(int potentialNextTurnDamagePoints)
@@ -36,6 +38,11 @@ public class StatsController : MonoBehaviour
         }
 
         DecreaseBarValue(potentialNextTurnDamagePoints, BarType.Defense);
+    }
+
+    public void SetManaPredictionPoints(int potentialNextTurnManaPoints)
+    {
+        DecreaseBarValue(potentialNextTurnManaPoints, BarType.Mana);
     }
 
     public void SetMaxBarValue(int maxValue, BarType type)

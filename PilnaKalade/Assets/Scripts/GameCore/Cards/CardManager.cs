@@ -11,9 +11,12 @@ public class CardManager : MonoBehaviour
     public GameObject cardPrefab;
 
     public UnityEvent onNoCardsDrawnAfterDiscardChange = new UnityEvent();
+    public UnityEvent<CardData> OnCardEndUse = new UnityEvent<CardData>();
+
     public bool NoCardsDrawnAfterDiscard { get; set; }
 
     private GameObject hand;
+
 
     void Awake()
     {
@@ -22,8 +25,22 @@ public class CardManager : MonoBehaviour
 
         var cards = GameObject.FindGameObjectsWithTag("Card")
             .Select(gameObject => gameObject.GetComponent<Card>());
+
         foreach(var card in cards)
+        {
+            // TODO: Update it to set values from deck instead of randomising
+            card.SetData(new CardData
+            {
+                cost = Random.Range(1, 3),
+                stats = new CardStats
+                {
+                    armor = Random.Range(1, 10),
+                    damagemultiplier = Random.Range(1, 10)
+                }
+            });
+
             card.onUse.AddListener(OnCardUse);
+        }
     }
 
     public void DrawNewHand()
@@ -45,7 +62,19 @@ public class CardManager : MonoBehaviour
         //TODO: Update it to draw from deck instead of randomising
         GameObject card = Instantiate(cardPrefab, hand.transform);
         card.transform.localScale = card.transform.localScale * 0.15f;
-        card.GetComponent<Card>().onUse.AddListener(OnCardUse);
+
+        var cardComponent = card.GetComponent<Card>();
+
+        cardComponent.onUse.AddListener(OnCardUse);
+        cardComponent.SetData(new CardData
+        {
+            cost = Random.Range(1, 3),
+            stats = new CardStats
+            {
+                armor = Random.Range(0, 10),
+                damagemultiplier = Random.Range(0, 10)
+    }
+        });
 
         string[] randomDescriptions = new string[] { "Lorem Ipsum", "Swing wildly", "Bottoms up!", "Slash", "Nothing personel, kiddo" };
         var description = card.transform.Find("Description Panel")
@@ -66,9 +95,11 @@ public class CardManager : MonoBehaviour
         onNoCardsDrawnAfterDiscardChange.Invoke();
     }
 
-    private void OnCardUse()
+    private void OnCardUse(CardData cardData)
     {
         NoCardsDrawnAfterDiscard = false;
         onNoCardsDrawnAfterDiscardChange.Invoke();
+
+        OnCardEndUse.Invoke(cardData);
     }
 }
