@@ -55,6 +55,8 @@ namespace Assets.Scripts.GameCore.Players
 
             _uiManager.ShowPredictionDamagePoints(damage, _playerTurn);
             _uiManager.ShowPredictionManaPoints(cardData.cost, _playerTurn);
+
+            _player.Mana -= cardData.cost;
         }
 
         private void ConfirmState()
