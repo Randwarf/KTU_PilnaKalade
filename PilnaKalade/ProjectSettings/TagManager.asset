@@ -11,6 +11,7 @@ TagManager:
   - UIManager
   - Enemy
   - NextTurnButton
+  - PlayerManager
   layers:
   - Default
   - TransparentFX
