@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
     {
         TransitionController.TransitionTo(1);
     }
+
     public void OpenSettingsMenu()
     {
         TransitionController.TransitionTo(2);
