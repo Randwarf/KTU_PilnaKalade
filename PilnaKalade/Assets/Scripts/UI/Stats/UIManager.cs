@@ -28,14 +28,19 @@ namespace Assets.Scripts.UI.Stats
             GetCurrentStatsController(playerTurn).SetDamagePredictionPoints(potentialNextTurnDamagePoints);
         }
 
-        public void ConfirmDamagePredictionPoints(bool playerTurn)
+        public void ShowPredictionManaPoints(int potentialNextTurnManaPoints, bool playerTurn)
         {
-            GetCurrentStatsController(playerTurn).ConfirmDamagePredictionPoints();
+            GetCurrentStatsController(!playerTurn).SetManaPredictionPoints(potentialNextTurnManaPoints);
         }
 
-        public void CancelDamagePredictionPoints(bool playerTurn)
+        public void ConfirmPredictionPoints(bool playerTurn)
         {
-            GetCurrentStatsController(playerTurn).CancelDamagePredictionPoints();
+            GetCurrentStatsController(playerTurn).ConfirmPredictionPoints();
+        }
+
+        public void CancelPredictionPoints(bool playerTurn)
+        {
+            GetCurrentStatsController(playerTurn).CancelPredictionPoints();
         }
 
         private StatsController GetCurrentStatsController(bool playerTurn)

@@ -51,11 +51,12 @@ namespace Assets.Scripts.GameCore.Players
             }
 
             _uiManager.ShowPredictionDamagePoints(damage, _playerTurn);
+            _uiManager.ShowPredictionManaPoints(cardData.cost, _playerTurn);
         }
 
         private void ConfirmState()
         {
-            _uiManager.ConfirmDamagePredictionPoints(_playerTurn);
+            _uiManager.ConfirmPredictionPoints(_playerTurn);
 
             // Could put enemy behaviour logic here
             // Temporary demo
@@ -70,7 +71,7 @@ namespace Assets.Scripts.GameCore.Players
                 enemy.Health -= randomDamage;
             }
             _uiManager.ShowPredictionDamagePoints(randomDamage, _playerTurn);
-            _uiManager.ConfirmDamagePredictionPoints(_playerTurn);
+            _uiManager.ConfirmPredictionPoints(_playerTurn);
 
             _playerTurn = !_playerTurn; // End enemy turn, start player turn
         }
