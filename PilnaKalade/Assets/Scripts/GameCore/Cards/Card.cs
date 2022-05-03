@@ -11,7 +11,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public TextMeshProUGUI Description;
     public Transform DescriptionPanel;
 
-    public UnityEvent onUse = new UnityEvent();
+    public UnityEvent<CardData> onUse = new UnityEvent<CardData>();
 
     private CanvasGroup CanvasGroup;
     private Canvas canvas;
@@ -52,9 +52,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     /* */
 
     public void OnBeginDrag(PointerEventData eventData) {
-        cardData = new CardData {
-            figureMap = "111 010 010"
-        };
+        cardData.figureMap = "111 010 010";
         int[,] figureMap = cardData.GetFigureMap();
         CanvasGroup.DOFade(0f, 0.2f);
         figure = FigureMaker.SpawnFigure(figureMap, FindObjectOfType<Canvas>(), Vector2.zero);
@@ -66,7 +64,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         Destroy(figure.gameObject);
 
         if (successful) {
-            onUse.Invoke();
+            onUse.Invoke(cardData);
             Destroy(gameObject);
         }
 
