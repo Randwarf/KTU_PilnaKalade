@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tile
+  - Grid
+  - Card
+  - CardManager
   layers:
   - Default
   - TransparentFX

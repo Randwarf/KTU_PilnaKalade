@@ -2,6 +2,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                                     IBeginDragHandler, IEndDragHandler, IDragHandler
@@ -9,7 +10,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public TextMeshProUGUI Cost;
     public TextMeshProUGUI Description;
     public Transform DescriptionPanel;
-    
+
+    public UnityEvent onUse = new UnityEvent();
+
     private CanvasGroup CanvasGroup;
     private Canvas canvas;
 
@@ -63,6 +66,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         Destroy(figure.gameObject);
 
         if (successful) {
+            onUse.Invoke();
             Destroy(gameObject);
         }
 
