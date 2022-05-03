@@ -7,13 +7,6 @@ namespace Assets.Scripts.UI.Stats
         public StatsController EnemyStatsController;
         public StatsController PlayerStatsController;
 
-        // Sample values for demonstration
-        private void Start()
-        {
-            InitBarValues(100, 100, 100, true);
-            InitBarValues(100, 100, 100, false);
-        }
-
         public void InitBarValues(int maxDefenseValue, int maxHealthValue, int maxManaValue, bool forPlayer)
         {
             if(!forPlayer)
@@ -47,7 +40,7 @@ namespace Assets.Scripts.UI.Stats
 
         private StatsController GetCurrentStatsController(bool playerTurn)
         {
-            if (!playerTurn)
+            if (playerTurn)
             {
                 return EnemyStatsController;
             }
