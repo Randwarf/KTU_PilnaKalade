@@ -5,6 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tile
+  - Grid
+  - Card
+  - CardManager
+  - UIManager
+  - Enemy
+  - NextTurnButton
+  - PlayerManager
   layers:
   - Default
   - TransparentFX
