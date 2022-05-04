@@ -17,7 +17,7 @@ namespace Assets.Scripts.GameCore.Players
 
         private CardManager _cardManager;
 
-        void Awake()
+        void Start()
         {
             _playerTurn = true;
 
@@ -33,6 +33,12 @@ namespace Assets.Scripts.GameCore.Players
 
             _cardManager = GameObject.FindWithTag("CardManager").GetComponent<CardManager>();
             _cardManager.OnCardEndUse.AddListener(UpdateState);
+
+            _player.Defense = Game.DefaultEnemyDefense;
+            _player.Health = Game.DefaultEnemyHealth;
+            _player.Mana = Game.DefaultPlayerMana;
+            _enemyPlayer.Defense = Game.DefaultPlayerDefense;
+            _enemyPlayer.Health = Game.DefaultPlayerHealth;
 
             _previousMana = _player.Mana;
 
