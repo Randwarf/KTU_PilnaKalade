@@ -10045,7 +10045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3654990d4cab8409cc9cc6cad7b653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinProportionRequired: 0.5
+  MinProportionRequired: 0.001
 --- !u!114 &1888134232
 MonoBehaviour:
   m_ObjectHideFlags: 0
