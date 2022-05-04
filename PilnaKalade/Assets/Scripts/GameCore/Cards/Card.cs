@@ -64,7 +64,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         cardData.figureMap = "111 010 010";
         int[,] figureMap = cardData.GetFigureMap();
         CanvasGroup.DOFade(0f, 0.2f);
-        figure = FigureMaker.SpawnFigure(figureMap, FindObjectOfType<Canvas>(), Vector2.zero);
+        figure = FigureMaker.SpawnFigure(figureMap, FindObjectOfType<Canvas>().transform, Vector2.zero, 100, 5);
         figure.FadeIn();
     }
 

@@ -12,7 +12,7 @@ public class Figure : MonoBehaviour
     private GameGrid grid;
 
     private int[,] figureMap;
-    private List<RawImage> figureTiles;
+    private List<Image> figureTiles;
 
     void Start() {
         EventSystem = FindObjectOfType<EventSystem>();
@@ -24,6 +24,11 @@ public class Figure : MonoBehaviour
     public void FadeIn() {
         GetFigureTiles();
         figureTiles.ForEach(tile => tile.DOFade(1f, 0.2f));
+    }
+
+    public void Show() {
+        GetFigureTiles();
+        figureTiles.ForEach(tile => tile.DOFade(1f, 0f));
     }
 
     public void ShowSelection() {
@@ -52,8 +57,8 @@ public class Figure : MonoBehaviour
     }
 
     private void GetFigureTiles() {
-        var allFigureTiles = GetComponentsInChildren<RawImage>();
-        figureTiles = new List<RawImage>();
+        var allFigureTiles = GetComponentsInChildren<Image>();
+        figureTiles = new List<Image>();
 
         for (int i = 0; i < figureMap.GetLength(0); i++) {
             for (int j = 0; j < figureMap.GetLength(1); j++) {
@@ -68,7 +73,7 @@ public class Figure : MonoBehaviour
     private List<int> GetSelectedGridTiles() {
         List<int> selectedTiles = new List<int>();
 
-        foreach (RawImage figureTile in figureTiles) {
+        foreach (Image figureTile in figureTiles) {
             PointerEventData pointerEventData = new PointerEventData(EventSystem);
             pointerEventData.position = figureTile.transform.position;
             List<RaycastResult> results = new List<RaycastResult>();
