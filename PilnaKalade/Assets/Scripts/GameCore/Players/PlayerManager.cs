@@ -43,6 +43,9 @@ namespace Assets.Scripts.GameCore.Players
         private void UpdateState(CardData cardData)
         {
             var player = GetPlayer(_playerTurn);
+            if (cardData.stats == null) {
+                Debug.Log("dfsdf");
+            }
             var damage = Game.DefaultDamage * cardData.stats.damagemultiplier;
             var difference = player.Defense - damage;
 

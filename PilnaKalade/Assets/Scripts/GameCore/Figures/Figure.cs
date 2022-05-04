@@ -13,11 +13,17 @@ public class Figure : MonoBehaviour
     private int[,] figureMap;
     private List<Image> figureTiles;
 
+    private GameCard card;
+
     void Start() {
         EventSystem = FindObjectOfType<EventSystem>();
         Raycaster = FindObjectOfType<GraphicRaycaster>();
         grid = FindObjectOfType<GameGrid>();
         GetFigureTiles();
+    }
+
+    public void SetCard(GameCard card) {
+        this.card = card;
     }
 
     public void FadeIn() {
@@ -35,7 +41,7 @@ public class Figure : MonoBehaviour
             return;
 
         grid.UnmarkTiles();
-        grid.MarkTiles(GetSelectedGridTiles(), Color.yellow);
+        grid.MarkTiles(GetSelectedGridTiles());
     }
 
     public bool PlaceFigure() {
@@ -44,7 +50,7 @@ public class Figure : MonoBehaviour
             return false;
         }
 
-        grid.PlaceTiles(GetSelectedGridTiles(), Color.red);
+        grid.PlaceTiles(GetSelectedGridTiles());
         return true;
     }
 
@@ -86,5 +92,15 @@ public class Figure : MonoBehaviour
         }
 
         return selectedTiles;
+    }
+
+    private void OnDestroy() {
+        figureTiles.ForEach(tile => {
+            DOTween.Complete(tile);
+        });
+        if (card != null) {
+            card.KillTweens();
+            card.Show();
+        }
     }
 }
