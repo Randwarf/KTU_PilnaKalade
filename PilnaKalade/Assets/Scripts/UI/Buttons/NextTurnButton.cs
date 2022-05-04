@@ -7,22 +7,22 @@ using UnityEngine.UI;
 public class NextTurnButton : MonoBehaviour
 {
     private CardManager cardManager;
-    private Button nextTurnButton;
+    private CustomButton nextTurnButton;
 
     void Awake()
     {
         cardManager = GameObject.FindWithTag("CardManager").GetComponent<CardManager>();
-        nextTurnButton = GetComponent<Button>();
+        nextTurnButton = GetComponent<CustomButton>();
     }
 
     void OnEnable()
     {
-        nextTurnButton.onClick.AddListener(OnNextTurnClick);
+        nextTurnButton.OnPressed.AddListener(OnNextTurnClick);
     }
 
     void OnDisable()
     {
-        nextTurnButton.onClick.RemoveListener(OnNextTurnClick);
+        nextTurnButton.OnPressed.RemoveListener(OnNextTurnClick);
     }
 
     private void OnNextTurnClick()

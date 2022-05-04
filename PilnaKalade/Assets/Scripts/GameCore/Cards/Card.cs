@@ -64,7 +64,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         cardData.figureMap = "111 010 010";
         int[,] figureMap = cardData.GetFigureMap();
         CanvasGroup.DOFade(0f, 0.2f);
-        figure = FigureMaker.SpawnFigure(figureMap, FindObjectOfType<Canvas>().transform, Vector2.zero, 100, 5);
+        figure = FigureMaker.SpawnFigure(figureMap, FindObjectOfType<Canvas>().transform, Vector2.zero, 110, -3);
         figure.FadeIn();
     }
 
@@ -86,6 +86,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     }
 
     public void OnDrag(PointerEventData eventData) {
+        if (playerManager ==null) {
+            Debug.Log("gdfgdf");
+        }
         if (!playerManager.CanPlaceCard(cardData))
         {
             return;

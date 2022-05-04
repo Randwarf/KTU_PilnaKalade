@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,8 @@ public class ExhaustButton : MonoBehaviour
 
     private GameGrid gameGrid;
     private CardManager cardManager;
-    private Button exhaustButton;
+    private CustomButton exhaustButton;
+    private CanvasGroup buttonCanvasGroup;
 
     private bool IsExhaustEnabled()
     {
@@ -21,14 +23,15 @@ public class ExhaustButton : MonoBehaviour
     {
         gameGrid = GameObject.FindWithTag("Grid").GetComponent<GameGrid>();
         cardManager = GameObject.FindWithTag("CardManager").GetComponent<CardManager>();
-        exhaustButton = GetComponent<Button>();
+        exhaustButton = GetComponent<CustomButton>();
+        buttonCanvasGroup = GetComponent<CanvasGroup>();
     }
 
     void OnEnable()
     {
         gameGrid.onTilePlacementChanges.AddListener(UpdateButton);
         cardManager.onNoCardsDrawnAfterDiscardChange.AddListener(UpdateButton);
-        exhaustButton.onClick.AddListener(OnExhaustClick);
+        exhaustButton.OnPressed.AddListener(OnExhaustClick);
         UpdateButton();
     }
 
@@ -36,7 +39,7 @@ public class ExhaustButton : MonoBehaviour
     {
         gameGrid.onTilePlacementChanges.RemoveListener(UpdateButton);
         cardManager.onNoCardsDrawnAfterDiscardChange.RemoveListener(UpdateButton);
-        exhaustButton.onClick.RemoveListener(OnExhaustClick);
+        exhaustButton.OnPressed.RemoveListener(OnExhaustClick);
     }
 
     void OnValidate()
@@ -55,6 +58,10 @@ public class ExhaustButton : MonoBehaviour
 
     private void UpdateButton()
     {
-        exhaustButton.interactable = IsExhaustEnabled();
+        //exhaustButton.interactable = IsExhaustEnabled();
+        //exhaustButton.gameObject.SetActive(IsExhaustEnabled());
+        bool isEnabled = IsExhaustEnabled();
+        buttonCanvasGroup.interactable = isEnabled;
+        buttonCanvasGroup.DOFade(isEnabled ? 1f : 0f, 0.2f);
     }
 }
