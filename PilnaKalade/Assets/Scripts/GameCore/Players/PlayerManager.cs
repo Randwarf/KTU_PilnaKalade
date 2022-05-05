@@ -61,11 +61,7 @@ namespace Assets.Scripts.GameCore.Players
         {
             _uiManager.ConfirmPredictionPoints(_playerTurn);
 
-            //check if enemy died
-            if (_enemyPlayer.Health <= 0)
-            {
-                _uiManager.Victory();
-            }
+
 
             // Could put enemy behaviour logic here
             // Temporary demo
@@ -78,6 +74,12 @@ namespace Assets.Scripts.GameCore.Players
             _uiManager.ConfirmPredictionPoints(_playerTurn);
 
             _playerTurn = !_playerTurn; // End enemy turn, start player turn
+
+            //check if enemy died
+            if (_enemyPlayer.Health <= 0 && _player.Health > 0)
+            {
+                _uiManager.Victory();
+            }
 
             //check if player died
             if (_player.Health <= 0)
