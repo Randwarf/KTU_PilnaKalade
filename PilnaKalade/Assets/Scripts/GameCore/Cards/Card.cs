@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using Assets.Scripts.GameCore.Players;
 
 public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                                     IBeginDragHandler, IEndDragHandler, IDragHandler
@@ -10,17 +11,16 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public TextMeshProUGUI Cost;
     public TextMeshProUGUI Description;
     public Transform DescriptionPanel;
-
-    public UnityEvent onUse = new UnityEvent();
-
     private CanvasGroup CanvasGroup;
     private Canvas canvas;
-
     private float cardHeigth;
     private float descPanelHeight;
-
-    private CardData cardData;
     private Figure figure;
+    
+    private PlayerManager playerManager;
+    private CardData cardData;
+
+    public UnityEvent<CardData> onUse = new UnityEvent<CardData>();
 
     private void Start() {
         RectTransform descPanelRect = (RectTransform)DescriptionPanel;
@@ -30,13 +30,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
         CanvasGroup = GetComponent<CanvasGroup>();
         canvas = FindObjectOfType<Canvas>();
-    }
+        playerManager = GameObject.FindWithTag("PlayerManager").GetComponent<PlayerManager>();
 
-    public void SetData(CardData cardData) {
-        this.cardData = cardData;
-    }
+        PlayerDeck.LoadIfUnloaded();
+        cardData = PlayerDeck.DrawRandom();
 
-    public void UpdateVisuals() {
         Cost.text = $"Cost: {cardData.cost}";
         Description.text = cardData.description;
     }
@@ -52,36 +50,48 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     /* */
 
     public void OnBeginDrag(PointerEventData eventData) {
-        cardData = new CardData {
-            figureMap = "111 010 010"
-        };
+        if (!playerManager.CanPlaceCard(cardData))
+        {
+            return;
+        }
+
         int[,] figureMap = cardData.GetFigureMap();
         CanvasGroup.DOFade(0f, 0.2f);
-        figure = FigureMaker.SpawnFigure(figureMap, FindObjectOfType<Canvas>(), Vector2.zero);
+        figure = FigureMaker.SpawnFigure(figureMap, FindObjectOfType<Canvas>().transform, Vector2.zero, 100, 5);
         figure.FadeIn();
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        if (!playerManager.CanPlaceCard(cardData))
+        {
+            return;
+        }
+
+        CanvasGroup.DOKill();
+        CanvasGroup.alpha = 1;
+
         bool successful = figure.PlaceFigure();
         Destroy(figure.gameObject);
 
         if (successful) {
-            onUse.Invoke();
+            onUse.Invoke(cardData);
             Destroy(gameObject);
         }
-
-        CanvasGroup.alpha = 1;
     }
 
     public void OnDrag(PointerEventData eventData) {
+        if (!playerManager.CanPlaceCard(cardData))
+        {
+            return;
+        }
+
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvas.transform as RectTransform, Input.mousePosition,
             canvas.worldCamera,
             out Vector2 pos);
 
-        figure.transform.localPosition = pos;
-
-        if (figure != null) {
+        if(figure != null) {
+            figure.transform.localPosition = pos;
             figure.ShowSelection();
         }
     }

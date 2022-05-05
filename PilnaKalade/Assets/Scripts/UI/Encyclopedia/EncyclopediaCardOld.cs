@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EncyclopediaCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class EncyclopediaCardOld : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public TextMeshProUGUI Cost;
     public TextMeshProUGUI Description;
