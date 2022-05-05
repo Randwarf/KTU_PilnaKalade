@@ -17,7 +17,7 @@ namespace Assets.Scripts.GameCore.Players
 
         private CardManager _cardManager;
 
-        void Awake()
+        void Start()
         {
             _playerTurn = true;
 

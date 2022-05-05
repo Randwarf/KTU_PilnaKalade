@@ -11,19 +11,16 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public TextMeshProUGUI Cost;
     public TextMeshProUGUI Description;
     public Transform DescriptionPanel;
-
-    public UnityEvent<CardData> onUse = new UnityEvent<CardData>();
-
     private CanvasGroup CanvasGroup;
     private Canvas canvas;
-
     private float cardHeigth;
     private float descPanelHeight;
-
-    private CardData cardData;
     private Figure figure;
-
+    
     private PlayerManager playerManager;
+    private CardData cardData;
+
+    public UnityEvent<CardData> onUse = new UnityEvent<CardData>();
 
     private void Start() {
         RectTransform descPanelRect = (RectTransform)DescriptionPanel;
@@ -34,13 +31,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         CanvasGroup = GetComponent<CanvasGroup>();
         canvas = FindObjectOfType<Canvas>();
         playerManager = GameObject.FindWithTag("PlayerManager").GetComponent<PlayerManager>();
-    }
 
-    public void SetData(CardData cardData) {
-        this.cardData = cardData;
-    }
+        PlayerDeck.LoadIfUnloaded();
+        cardData = PlayerDeck.DrawRandom();
 
-    public void UpdateVisuals() {
         Cost.text = $"Cost: {cardData.cost}";
         Description.text = cardData.description;
     }
@@ -61,7 +55,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             return;
         }
 
-        cardData.figureMap = "111 010 010";
         int[,] figureMap = cardData.GetFigureMap();
         CanvasGroup.DOFade(0f, 0.2f);
         figure = FigureMaker.SpawnFigure(figureMap, FindObjectOfType<Canvas>().transform, Vector2.zero, 100, 5);
@@ -74,6 +67,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             return;
         }
 
+        CanvasGroup.DOKill();
+        CanvasGroup.alpha = 1;
+
         bool successful = figure.PlaceFigure();
         Destroy(figure.gameObject);
 
@@ -81,8 +77,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             onUse.Invoke(cardData);
             Destroy(gameObject);
         }
-
-        CanvasGroup.alpha = 1;
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -96,9 +90,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             canvas.worldCamera,
             out Vector2 pos);
 
-        figure.transform.localPosition = pos;
-
-        if (figure != null) {
+        if(figure != null) {
+            figure.transform.localPosition = pos;
             figure.ShowSelection();
         }
     }
