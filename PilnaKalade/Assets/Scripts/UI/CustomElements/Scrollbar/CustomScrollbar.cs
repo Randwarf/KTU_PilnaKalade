@@ -27,7 +27,6 @@ public class CustomScrollbar : MonoBehaviour
     }
 
     private void OnScrollbarValueChanged(Vector2 value) {
-        Debug.Log(value);
         scrollValue = 1 - Mathf.Clamp(value.y, 0, 1);
     }
 }

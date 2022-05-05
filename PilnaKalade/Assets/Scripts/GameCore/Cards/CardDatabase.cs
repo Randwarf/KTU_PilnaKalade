@@ -18,6 +18,11 @@ public class CardDatabase
         return cards[index];
     }
 
+    public static int GetCount()
+    {
+        return cards.Count;
+    }
+
     public static void LoadCards() {
         string jsonName = CARDS_DATA_FILE.Split('.')[0];
         TextAsset jsonFile = Resources.Load<TextAsset>(jsonName);

@@ -7,8 +7,9 @@
 		"figureMap": "010 111",
 		"stats": {
 			"armor": 50,
-			"damagemultiplier": 25
-		}
+			"damagemultiplier": 3
+		},
+		"cost": 3
 	},
 	{
 		"key": 2,
@@ -18,8 +19,9 @@
 		"figureMap": "11 11",
 		"stats": {
 			"armor": 50,
-			"damagemultiplier": 25
-		}
+			"damagemultiplier": 4
+		},
+		"cost": 2
 	},
 	{
 		"key": 3,
@@ -29,7 +31,20 @@
 		"figureMap": "111 010 010",
 		"stats": {
 			"armor": 50,
-			"damagemultiplier": 25
-		}
+			"damagemultiplier": 4
+		},
+		"cost": 3
+	},
+	{
+		"key": 4,
+		"id": "letter_l",
+		"title": "Letter L",
+		"description": "Letter L description",
+		"figureMap": "10 10 11",
+		"stats": {
+			"armor": -25,
+			"damagemultiplier": 3
+		},
+		"cost": 4
 	}
 ]
