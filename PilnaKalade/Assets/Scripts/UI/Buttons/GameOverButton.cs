@@ -20,7 +20,7 @@ public class GameOverButton : MonoBehaviour
 
     public void Continue()
     {
-        sceneScript.Reload();
+        sceneScript.OpenMainMenu();
     }
 
     // Update is called once per frame
