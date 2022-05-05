@@ -6,6 +6,8 @@ namespace Assets.Scripts.UI.Stats
     {
         public StatsController EnemyStatsController;
         public StatsController PlayerStatsController;
+        public GameObject VictoryScreen;
+        public GameObject DefeatScreen;
 
         public void InitBarValues(int maxDefenseValue, int maxHealthValue, int maxManaValue, bool forPlayer)
         {
@@ -56,6 +58,15 @@ namespace Assets.Scripts.UI.Stats
             }
 
             return PlayerStatsController;
+        }
+
+        public void Victory()
+        {
+            GameObject.Instantiate(VictoryScreen);
+        }
+        public void Defeat()
+        {
+            GameObject.Instantiate(DefeatScreen);
         }
     }
 }

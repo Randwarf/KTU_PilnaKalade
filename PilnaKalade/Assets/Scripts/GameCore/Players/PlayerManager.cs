@@ -34,6 +34,12 @@ namespace Assets.Scripts.GameCore.Players
             _cardManager = GameObject.FindWithTag("CardManager").GetComponent<CardManager>();
             _cardManager.OnCardEndUse.AddListener(UpdateState);
 
+            _player.Defense = Game.DefaultEnemyDefense;
+            _player.Health = Game.DefaultEnemyHealth;
+            _player.Mana = Game.DefaultPlayerMana;
+            _enemyPlayer.Defense = Game.DefaultPlayerDefense;
+            _enemyPlayer.Health = Game.DefaultPlayerHealth;
+
             _previousMana = _player.Mana;
 
             _uiManager.InitBarValues(_player.Defense, _player.Health, _player.Mana, true);
@@ -42,16 +48,8 @@ namespace Assets.Scripts.GameCore.Players
 
         private void UpdateState(CardData cardData)
         {
-            var player = GetPlayer(_playerTurn);
             var damage = Game.DefaultDamage * cardData.stats.damagemultiplier;
-            var difference = player.Defense - damage;
-
-            player.Defense -= damage;
-
-            if(difference < 0)
-            {
-                player.Health += difference;
-            }
+            _enemyPlayer.takeDamage(damage);
 
             _uiManager.ShowPredictionDamagePoints(damage, _playerTurn);
             _uiManager.ShowPredictionManaPoints(cardData.cost, _playerTurn);
@@ -63,22 +61,31 @@ namespace Assets.Scripts.GameCore.Players
         {
             _uiManager.ConfirmPredictionPoints(_playerTurn);
 
+
+
             // Could put enemy behaviour logic here
             // Temporary demo
             _playerTurn = !_playerTurn; // End player turn, start enemy turn
             
-            var enemy = GetPlayer(_playerTurn);
             var randomDamage = Random.Range(10, 50);
-            enemy.Defense -= randomDamage;
-            
-            if(enemy.Defense <= randomDamage)
-            {
-                enemy.Health -= randomDamage;
-            }
+            _player.takeDamage(randomDamage);
+
             _uiManager.ShowPredictionDamagePoints(randomDamage, _playerTurn);
             _uiManager.ConfirmPredictionPoints(_playerTurn);
 
             _playerTurn = !_playerTurn; // End enemy turn, start player turn
+
+            //check if enemy died
+            if (_enemyPlayer.Health <= 0 && _player.Health > 0)
+            {
+                _uiManager.Victory();
+            }
+
+            //check if player died
+            if (_player.Health <= 0)
+            {
+                _uiManager.Defeat();
+            }
 
             // Reseting mana
             _player.Mana = _previousMana;
