@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Figure : MonoBehaviour
 {
@@ -45,7 +46,10 @@ public class Figure : MonoBehaviour
     }
 
     public bool PlaceFigure() {
-        if (GetSelectedGridTiles().Count != figureTiles.Count) {
+        var selectedGridTiles = GetSelectedGridTiles();
+
+        if (selectedGridTiles.Count != figureTiles.Count 
+            || selectedGridTiles.Any(grid.IsTileOccupied)) {
             grid.UnmarkTiles();
             return false;
         }

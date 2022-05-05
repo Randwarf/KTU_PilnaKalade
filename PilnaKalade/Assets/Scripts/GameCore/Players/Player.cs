@@ -9,5 +9,15 @@ namespace Assets.Scripts.GameCore.Players
         public int Mana;
 
         public int Defense;
+
+        public void takeDamage(int damage)
+        {
+            Defense -= damage;
+            if(Defense < 0)
+            {
+                Health += Defense;
+                Defense = 0;
+            }
+        }
     }
 }
