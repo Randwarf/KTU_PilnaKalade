@@ -46,5 +46,31 @@
 			"damagemultiplier": 3
 		},
 		"cost": 4
+	},
+	{
+		"key": 5,
+		"id": "letter_i",
+		"title": "Letter I",
+		"description": "Deals 10 poison damage per turn",
+		"figureMap": "10 10 10",
+		"stats": {
+			"armor": -25,
+			"damagemultiplier": 3,
+			"poisonDamagePerTurn": 10
+		},
+		"cost": 4
+	},
+	{
+		"key": 6,
+		"id": "letter_u",
+		"title": "Letter U",
+		"description": "Deals 20 poison damage per turn",
+		"figureMap": "101 101 010",
+		"stats": {
+			"armor": -25,
+			"damagemultiplier": 3,
+			"poisonDamagePerTurn": 20
+		},
+		"cost": 6
 	}
 ]
