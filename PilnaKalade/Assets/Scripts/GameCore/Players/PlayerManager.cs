@@ -14,6 +14,7 @@ namespace Assets.Scripts.GameCore.Players
         private Player _enemyPlayer;
 
         private int _previousMana;
+        private int _appliedPoisonDamage;
 
         private UIManager _uiManager;
 
@@ -40,7 +41,22 @@ namespace Assets.Scripts.GameCore.Players
         private void OnExhaustClearPoison()
         {
             _enemyPlayer.ClearPoison();
+            
+            // Resetting damage received from poison
+            var diff = Game.DefaultEnemyHealth - _enemyPlayer.Health;
+            var defense = _appliedPoisonDamage - diff;
+
+            if(defense < 0)
+            {
+                defense = 0;
+            }
+
+            _enemyPlayer.Defense += defense;
+            _enemyPlayer.Health += _appliedPoisonDamage - defense;
+            _appliedPoisonDamage = 0;
+            
             _uiManager.ClearEnemyStatusEffects();
+            _uiManager.CancelPredictionPoints(UpdateEnemy);
         }
 
         private void OnNextTurnConfirmState()
@@ -64,8 +80,9 @@ namespace Assets.Scripts.GameCore.Players
 
             ResetPlayerMana();
 
-            // Update stats for enemy
-            _uiManager.ShowPredictionDamagePoints(_enemyPlayer.ApplyPoisonDamage(), UpdateEnemy);
+            // Update poison stats for enemy
+            _appliedPoisonDamage = _enemyPlayer.ApplyPoisonDamage();
+            _uiManager.ShowPredictionDamagePoints(_appliedPoisonDamage, UpdateEnemy);
         }
 
         private void ResetPlayerMana()
@@ -83,6 +100,7 @@ namespace Assets.Scripts.GameCore.Players
             _enemyPlayer.Health = Game.DefaultPlayerHealth;
 
             _previousMana = _player.Mana;
+            _appliedPoisonDamage = 0;
 
             _uiManager.InitBarValues(_player.Defense, _player.Health, _player.Mana, UpdatePlayer);
             _uiManager.InitBarValues(_enemyPlayer.Defense, _enemyPlayer.Health, _enemyPlayer.Mana, UpdateEnemy);
@@ -119,7 +137,6 @@ namespace Assets.Scripts.GameCore.Players
             }
 
             _enemyPlayer.AddPoison(cardData.stats.poisonDamagePerTurn);
-            _enemyPlayer.takeDamage(cardData.stats.poisonDamagePerTurn);
 
             SpawnPoison(cardData.stats.poisonDamagePerTurn);
         }
@@ -158,6 +175,7 @@ namespace Assets.Scripts.GameCore.Players
         private void DecreasePlayerMana(CardData cardData)
         {
             _player.Mana -= cardData.cost;
+            _uiManager.ShowPredictionManaPoints(cardData.cost, UpdatePlayer);
         }
     }
 }
