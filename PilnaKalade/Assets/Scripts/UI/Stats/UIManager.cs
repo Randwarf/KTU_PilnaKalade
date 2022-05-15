@@ -9,9 +9,9 @@ namespace Assets.Scripts.UI.Stats
         public GameObject VictoryScreen;
         public GameObject DefeatScreen;
 
-        public void InitBarValues(int maxDefenseValue, int maxHealthValue, int maxManaValue, bool forPlayer)
+        public void InitBarValues(int maxDefenseValue, int maxHealthValue, int maxManaValue, bool updatePlayer)
         {
-            if(!forPlayer)
+            if(!updatePlayer)
             {
                 EnemyStatsController.SetMaxBarValue(maxDefenseValue, BarType.Defense);
                 EnemyStatsController.SetMaxBarValue(maxHealthValue, BarType.Health);
@@ -35,24 +35,24 @@ namespace Assets.Scripts.UI.Stats
             EnemyStatsController.SpawnEffect(type);
         }
 
-        public void ShowPredictionDamagePoints(int potentialNextTurnDamagePoints, bool playerTurn)
+        public void ShowPredictionDamagePoints(int potentialNextTurnDamagePoints, bool updatePlayer)
         {
-            GetCurrentStatsController(playerTurn).SetDamagePredictionPoints(potentialNextTurnDamagePoints);
+            GetCurrentStatsController(updatePlayer).SetDamagePredictionPoints(potentialNextTurnDamagePoints);
         }
 
-        public void ShowPredictionManaPoints(int potentialNextTurnManaPoints, bool playerTurn)
+        public void ShowPredictionManaPoints(int potentialNextTurnManaPoints, bool updatePlayer)
         {
-            GetCurrentStatsController(!playerTurn).SetManaPredictionPoints(potentialNextTurnManaPoints);
+            GetCurrentStatsController(updatePlayer).SetManaPredictionPoints(potentialNextTurnManaPoints);
         }
 
-        public void ConfirmPredictionPoints(bool playerTurn)
+        public void ConfirmPredictionPoints(bool updatePlayer)
         {
-            GetCurrentStatsController(playerTurn).ConfirmPredictionPoints();
+            GetCurrentStatsController(updatePlayer).ConfirmPredictionPoints();
         }
 
-        public void CancelPredictionPoints(bool playerTurn)
+        public void CancelPredictionPoints(bool updatePlayer)
         {
-            GetCurrentStatsController(playerTurn).CancelPredictionPoints();
+            GetCurrentStatsController(updatePlayer).CancelPredictionPoints();
         }
 
         public void ClearEnemyStatusEffects()
@@ -60,9 +60,9 @@ namespace Assets.Scripts.UI.Stats
             EnemyStatsController.ClearEffects();
         }
 
-        private StatsController GetCurrentStatsController(bool playerTurn)
+        private StatsController GetCurrentStatsController(bool updatePlayer)
         {
-            if (playerTurn)
+            if (!updatePlayer)
             {
                 return EnemyStatsController;
             }
