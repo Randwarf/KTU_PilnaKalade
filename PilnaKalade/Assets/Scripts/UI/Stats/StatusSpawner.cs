@@ -24,6 +24,14 @@ public class StatusSpawner : MonoBehaviour
         }
     }
 
+    public void ClearEffects()
+    {
+        for (var i = 1; i < StatusContainer.childCount; i++)
+        {
+            Destroy(StatusContainer.GetChild(i).gameObject);
+        }
+    }
+
     public void SpawnEffect(StatusEffectType effectType)
     {
         var effectPrefab = Effects.FirstOrDefault(effect => effect.Type == effectType);
