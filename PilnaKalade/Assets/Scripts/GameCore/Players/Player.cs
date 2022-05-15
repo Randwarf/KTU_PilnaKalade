@@ -13,17 +13,27 @@ namespace Assets.Scripts.GameCore.Players
 
         private List<int> _appliedPoisons;
 
+        private void Start()
+        {
+            _appliedPoisons = new List<int>();
+        }
+
         public void AddPoison(int poisonDamagePerTurn)
         {
             _appliedPoisons.Add(poisonDamagePerTurn);
         }
 
-        public void ApplyPoisonDamage()
+        public int ApplyPoisonDamage()
         {
+            int totalDamage = 0;
+
             foreach(var poisonDamage in _appliedPoisons)
             {
+                totalDamage += poisonDamage;
                 takeDamage(poisonDamage);
             }
+
+            return totalDamage;
         }
 
         public void ClearPoison()
