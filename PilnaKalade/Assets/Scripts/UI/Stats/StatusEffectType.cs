@@ -2,7 +2,7 @@
 {
     public enum StatusEffectType
     {
-        Mana,
-        Health,
+        PoisonLow,
+        PoisonMedium
     }
 }
