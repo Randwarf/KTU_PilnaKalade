@@ -14,6 +14,11 @@ public class StatsController : MonoBehaviour
         Spawner.SpawnEffect(type);
     }
 
+    public void ClearEffects()
+    {
+        Spawner.ClearEffects();
+    }
+
     public void ConfirmPredictionPoints()
     {
         DefenseBar.CompleteSynchronization();

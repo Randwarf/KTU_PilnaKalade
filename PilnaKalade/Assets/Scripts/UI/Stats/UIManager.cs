@@ -30,6 +30,11 @@ namespace Assets.Scripts.UI.Stats
             PlayerStatsController.SetMaxBarValue(maxValue, type);
         }
 
+        public void SpawnPoisonEffect(StatusEffectType type)
+        {
+            EnemyStatsController.SpawnEffect(type);
+        }
+
         public void ShowPredictionDamagePoints(int potentialNextTurnDamagePoints, bool playerTurn)
         {
             GetCurrentStatsController(playerTurn).SetDamagePredictionPoints(potentialNextTurnDamagePoints);
@@ -48,6 +53,11 @@ namespace Assets.Scripts.UI.Stats
         public void CancelPredictionPoints(bool playerTurn)
         {
             GetCurrentStatsController(playerTurn).CancelPredictionPoints();
+        }
+
+        public void ClearEnemyStatusEffects()
+        {
+            EnemyStatsController.ClearEffects();
         }
 
         private StatsController GetCurrentStatsController(bool playerTurn)
