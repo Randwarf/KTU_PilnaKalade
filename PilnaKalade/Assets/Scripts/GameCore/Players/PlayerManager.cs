@@ -12,6 +12,7 @@ namespace Assets.Scripts.GameCore.Players
 
         private Player _player;
         private Player _enemyPlayer;
+        private EnemyData _enemyData;
 
         private int _previousMana;
         private int _appliedPoisonDamage;
@@ -64,13 +65,13 @@ namespace Assets.Scripts.GameCore.Players
             // Update stats for enemy
             _uiManager.ConfirmPredictionPoints(UpdateEnemy);
 
-            if(_enemyPlayer.Health <= 0)
+            if (_enemyPlayer.Health <= 0)
             {
                 _uiManager.Victory();
                 return;
             }
 
-            DoDamageToPlayer(Random.Range(10, 50));
+            ProcessEnemyMove();
 
             if (_player.Health <= 0)
             {
@@ -85,6 +86,38 @@ namespace Assets.Scripts.GameCore.Players
             _uiManager.ShowPredictionDamagePoints(_appliedPoisonDamage, UpdateEnemy);
         }
 
+        private void ProcessEnemyMove()
+        {
+            var action = _enemyData.getNextAttack();
+            DoDamageToPlayer(action.damage);
+            HealEnemy(action.heal);
+            ShieldEnemy(action.shield);
+        }
+
+        private void ShieldEnemy(int shield)
+        {
+            _enemyPlayer.Defense += shield;
+            if(_enemyPlayer.Defense > Game.DefaultEnemyDefense)
+            {
+                _enemyPlayer.Defense = Game.DefaultEnemyDefense;
+            }
+
+            _uiManager.EnemyStatsController.SetBarValue(_enemyPlayer.Defense, BarType.Defense);
+        }
+
+        private void HealEnemy(int heal)
+        {
+            _enemyPlayer.Health += heal;
+            if (_enemyPlayer.Health > _enemyData.maxHealth)
+            {
+                _enemyPlayer.Health = _enemyData.maxHealth;
+            }
+
+            Debug.Log(heal);
+            Debug.Log(_enemyPlayer.Health);
+            _uiManager.EnemyStatsController.SetBarValue(_enemyPlayer.Health, BarType.Health);
+        }
+
         private void ResetPlayerMana()
         {
             _player.Mana = _previousMana;
@@ -96,14 +129,17 @@ namespace Assets.Scripts.GameCore.Players
             _player.Defense = Game.DefaultEnemyDefense;
             _player.Health = Game.DefaultEnemyHealth;
             _player.Mana = Game.DefaultPlayerMana;
+
+            _enemyData = EnemyDatabase.getRandomEnemyData();
             _enemyPlayer.Defense = Game.DefaultPlayerDefense;
-            _enemyPlayer.Health = Game.DefaultPlayerHealth;
+            _enemyPlayer.Health = _enemyData.maxHealth;
 
             _previousMana = _player.Mana;
             _appliedPoisonDamage = 0;
 
             _uiManager.InitBarValues(_player.Defense, _player.Health, _player.Mana, UpdatePlayer);
             _uiManager.InitBarValues(_enemyPlayer.Defense, _enemyPlayer.Health, _enemyPlayer.Mana, UpdateEnemy);
+            //Turbūt būtų tikslinga defense = 0 padaryt pradžioje, o tik po to auga tiek player tiek enemy
         }
 
         private void GetComponents()

@@ -1,0 +1,81 @@
+[
+	{
+		"key": 1,
+		"name": "Snail",
+		"maxHealth": 50,
+		"level": 1,
+		"Attacks": [
+			{
+				"name": "Wait",
+				"weight": 10,
+				"damage": 0,
+				"heal": 1,
+				"shield": 0
+			},
+
+			{
+				"name": "Shell",
+				"weight": 20,
+				"damage": 0,
+				"heal": 0,
+				"shield": 10
+			},
+
+			{
+				"name": "Munch",
+				"weight": 10,
+				"damage": 10,
+				"heal": 0,
+				"shield": 0
+			}
+		]
+	},
+
+	{
+		"key": 2,
+		"name": "Orc",
+		"maxHealth": 125,
+		"level": 3,
+		"Attacks": [
+			{
+				"name": "Smash",
+				"weight": 20,
+				"damage": 10,
+				"heal": 0,
+				"shield": 0
+			},
+
+			{
+				"name": "Stomp",
+				"weight": 5,
+				"damage": 50,
+				"heal": 0,
+				"shield": 0
+			}
+		]
+	},
+
+	{
+		"key": 3,
+		"name": "Vampire",
+		"maxHealth": 75,
+		"level": 2,
+		"Attacks": [
+			{
+				"name": "Bite",
+				"weight": 20,
+				"damage": 10,
+				"heal": 10,
+				"shield": 0
+			},
+
+			{
+				"name": "Transform",
+				"weight": 20,
+				"damage": 0,
+				"heal": 15,
+				"shield": 0
+			}
+		]
+	}
+]

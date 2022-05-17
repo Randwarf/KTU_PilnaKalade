@@ -54,7 +54,12 @@ public class StatsController : MonoBehaviour
     {
         GetBar(type).MaxValue = maxValue;
     }
-    
+
+    public void SetBarValue(int value, BarType type)
+    {
+        GetBar(type).Value = value;
+    }
+
     private void IncreaseBarValue(int value, BarType type)
     {
         GetBar(type).Value += value;

@@ -6,5 +6,6 @@ public class GameInitialization : MonoBehaviour
     void Awake() {
         CardDatabase.LoadCards();
         SettingsController.LoadSettings();
+        EnemyDatabase.LoadEnemies();
     }
 }
