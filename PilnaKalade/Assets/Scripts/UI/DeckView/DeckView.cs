@@ -32,7 +32,7 @@ public class DeckView : MonoBehaviour
         foreach (CardData cardData in cards)
         {
             GameObject cardGO = Instantiate(CardPrefab, CardGrid);
-            EncyclopediaCardOld card = cardGO.GetComponent<EncyclopediaCardOld>();
+            EncyclopediaCard card = cardGO.GetComponent<EncyclopediaCard>();
             card.SetData(cardData);
             card.UpdateVisuals();
         }

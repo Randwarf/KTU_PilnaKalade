@@ -34,6 +34,9 @@ public class GameCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     }
 
     public void UpdateVisuals() {
+        PlayerDeck.LoadIfUnloaded();
+        CardData = PlayerDeck.DrawRandom();
+
         FigureNameText.text = CardData.title;
         FigureDescriptionText.text = CardData.description;
         CostText.text = "COST: " + CardData.cost;
