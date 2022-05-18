@@ -9,9 +9,11 @@ public class BattleSettings : MonoBehaviour
 {
     public CanvasGroup CanvasGroup;
 
-    public Toggle FullscreenToggle;
+    //public Toggle FullscreenToggle;
 
-    public Dropdown ResolutionDropdown;
+    //public Dropdown ResolutionDropdown;
+    public CustomCheckbox FullscreenToggle;
+    public CustomDropdown ResolutionDropdown;
 
     private Settings _activeSettings;
     private bool _toggleEmittedFirstEvent;
@@ -26,20 +28,20 @@ public class BattleSettings : MonoBehaviour
     public void ToggleFullscreen()
     {
         // Have to interrupt first call to this function, because toggle emits unnecessary onValueChange event on initialization
-        if (!_toggleEmittedFirstEvent)
-        {
-            _toggleEmittedFirstEvent = true;
-            return;
-        }
+        //if (!_toggleEmittedFirstEvent)
+        //{
+        //    _toggleEmittedFirstEvent = true;
+        //    return;
+        //}
 
-        _activeSettings.IsFullscreen = !_activeSettings.IsFullscreen;
-
+        _activeSettings.IsFullscreen = FullscreenToggle.isOn;
+        Debug.Log(_activeSettings.IsFullscreen);
         SettingsController.UpdateSettings(_activeSettings);
     }
 
     public void ChangeResolution()
     {
-        var resolutionText = ResolutionDropdown.options[ResolutionDropdown.value].text;
+        var resolutionText = ResolutionDropdown.SelectedOptionText;
         var parts = resolutionText.Split(' ');
 
         var newWidth = Convert.ToInt32(parts[0]);
@@ -61,25 +63,25 @@ public class BattleSettings : MonoBehaviour
 
     private void InitToggle()
     {
-        if (FullscreenToggle.isOn == _activeSettings.IsFullscreen)
-        {
-            _toggleEmittedFirstEvent = true;
-        }
-        else
-        {
-            _toggleEmittedFirstEvent = false;
-        }
-
-        FullscreenToggle.isOn = _activeSettings.IsFullscreen;
+        //if (FullscreenToggle.isOn == _activeSettings.IsFullscreen)
+        //{
+        //    _toggleEmittedFirstEvent = true;
+        //}
+        //else
+        //{
+        //    _toggleEmittedFirstEvent = false;
+        //}
+        Debug.Log(_activeSettings.IsFullscreen);
+        FullscreenToggle.SetToggleWithoutEffects(_activeSettings.IsFullscreen);
     }
 
     private void InitResolutionDropdown()
     {
         var resolutionString = $"{_activeSettings.WindowWidth} x {_activeSettings.WindowHeight}";
 
-        ResolutionDropdown.interactable = false;
-        ResolutionDropdown.value = ResolutionDropdown.options.FindIndex(option => option.text == resolutionString);
-        ResolutionDropdown.interactable = true;
+        ResolutionDropdown.Interactable = false;
+        ResolutionDropdown.SetSelectedIndex(ResolutionDropdown.options.FindIndex(option => option == resolutionString));
+        ResolutionDropdown.Interactable = true;
     }
 
     public void Open()

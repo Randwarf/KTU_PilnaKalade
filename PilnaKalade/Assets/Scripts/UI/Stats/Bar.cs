@@ -39,7 +39,6 @@ public class Bar : MonoBehaviour
 
         set
         {
-            Debug.Log(value);
             StatusBar.SetMaxValue(value);
             StatusBar.SetValue(value);
         }
