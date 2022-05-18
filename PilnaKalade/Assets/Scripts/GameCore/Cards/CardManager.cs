@@ -51,17 +51,6 @@ public class CardManager : MonoBehaviour
 
         var cardComponent = card.GetComponent<GameCard>();
 
-        cardComponent.SetData(new CardData() {
-            cost = Random.Range(1, 3),
-            figureMap = "111 010 010",
-            description = "ARMOR: 5",
-            title = "T Figure",
-            stats = new CardStats() {
-                armor = Random.Range(5, 15),
-                damagemultiplier = Random.Range(1, 3),
-            }
-        });
-
         cardComponent.onUse.AddListener(OnCardUse);
         cardComponent.UpdateVisuals();
     }
