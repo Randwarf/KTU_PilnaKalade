@@ -65,6 +65,9 @@ namespace Assets.Scripts.GameCore.Players
             // Update stats for enemy
             _uiManager.ConfirmPredictionPoints(UpdateEnemy);
 
+            // Update player stats
+            _uiManager.ConfirmPredictionPoints(!UpdateEnemy);
+
             if (_enemyPlayer.Health <= 0)
             {
                 _uiManager.Victory();
@@ -140,6 +143,10 @@ namespace Assets.Scripts.GameCore.Players
             _uiManager.InitBarValues(_player.Defense, _player.Health, _player.Mana, UpdatePlayer);
             _uiManager.InitBarValues(_enemyPlayer.Defense, _enemyPlayer.Health, _enemyPlayer.Mana, UpdateEnemy);
             //Turbūt būtų tikslinga defense = 0 padaryt pradžioje, o tik po to auga tiek player tiek enemy
+
+            //Show enemy's first move
+            var move = _enemyData.getNextAttack();
+            DoDamageToPlayer(move.damage);
         }
 
         private void GetComponents()
@@ -205,7 +212,7 @@ namespace Assets.Scripts.GameCore.Players
             _player.takeDamage(damage);
 
             _uiManager.ShowPredictionDamagePoints(damage, UpdatePlayer);
-            _uiManager.ConfirmPredictionPoints(UpdatePlayer);
+            //_uiManager.ConfirmPredictionPoints(UpdatePlayer);
         }
 
         private void DecreasePlayerMana(CardData cardData)

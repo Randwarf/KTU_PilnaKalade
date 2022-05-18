@@ -12,4 +12,9 @@ public class BattleScene : MonoBehaviour
     {
         TransitionController.TransitionTo(Scenes.BattleScene);
     }
+
+    private void Start()
+    {
+        EnemyDatabase.LoadEnemies();
+    }
 }

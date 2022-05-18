@@ -17,7 +17,7 @@ public class EnemyDatabase
 
     public static EnemyData getRandomEnemyData()
     {
-        return enemies[UnityEngine.Random.Range(0, enemies.Count - 1)];
+        return enemies[UnityEngine.Random.Range(0, enemies.Count)];
     }
 
     public static int GetCount()
