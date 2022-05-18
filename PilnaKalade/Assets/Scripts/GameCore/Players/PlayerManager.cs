@@ -57,7 +57,7 @@ namespace Assets.Scripts.GameCore.Players
             _appliedPoisonDamage = 0;
             
             _uiManager.ClearEnemyStatusEffects();
-            _uiManager.CancelPredictionPoints(UpdateEnemy);
+            //_uiManager.CancelPredictionPoints(UpdateEnemy);
         }
 
         private void OnNextTurnConfirmState()
@@ -118,6 +118,7 @@ namespace Assets.Scripts.GameCore.Players
 
             Debug.Log(heal);
             Debug.Log(_enemyPlayer.Health);
+
             _uiManager.EnemyStatsController.SetBarValue(_enemyPlayer.Health, BarType.Health);
         }
 
@@ -129,8 +130,8 @@ namespace Assets.Scripts.GameCore.Players
 
         private void InitPlayers()
         {
-            _player.Defense = Game.DefaultEnemyDefense;
-            _player.Health = Game.DefaultEnemyHealth;
+            _player.Defense = Game.DefaultPlayerDefense;
+            _player.Health = Game.DefaultPlayerHealth;
             _player.Mana = Game.DefaultPlayerMana;
 
             _enemyData = EnemyDatabase.getRandomEnemyData();
@@ -212,7 +213,6 @@ namespace Assets.Scripts.GameCore.Players
             _player.takeDamage(damage);
 
             _uiManager.ShowPredictionDamagePoints(damage, UpdatePlayer);
-            //_uiManager.ConfirmPredictionPoints(UpdatePlayer);
         }
 
         private void DecreasePlayerMana(CardData cardData)
