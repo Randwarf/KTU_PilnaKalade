@@ -29,12 +29,6 @@ public class GameCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         playerManager = GameObject.FindWithTag("PlayerManager").GetComponent<PlayerManager>();
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Debug.Log(CardData.stats.damagemultiplier);
-        }
-    }
-
     public void SetData(CardData cardData) {
         CardData = cardData;
     }
