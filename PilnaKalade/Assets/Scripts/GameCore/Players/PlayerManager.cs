@@ -22,8 +22,8 @@ namespace Assets.Scripts.GameCore.Players
             _playerTurn = true;
 
              GameObject.FindWithTag("NextTurnButton")
-                .GetComponent<Button>()
-                .onClick
+                .GetComponent<CustomButton>()
+                .OnPressed
                 .AddListener(ConfirmState);
 
             _player = GameObject.FindWithTag("Player").GetComponent<Player>();

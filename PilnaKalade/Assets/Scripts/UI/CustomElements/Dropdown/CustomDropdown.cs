@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -11,9 +12,12 @@ public class CustomDropdown : MonoBehaviour, IPointerUpHandler, IPointerDownHand
     [SerializeField] private Transform optionsParent;
     [SerializeField] private GameObject optionPrefab;
 
-    [SerializeField] private List<string> options;
-
     public int SelectedIndex { get; private set; } = -1;
+    public string SelectedOptionText { get; private set; } = "";
+    public bool Interactable { get; set; } = true;
+
+    public List<string> options;
+    public UnityEvent<int> OnValueChanged;
 
     private bool opened = false;
 
@@ -21,7 +25,9 @@ public class CustomDropdown : MonoBehaviour, IPointerUpHandler, IPointerDownHand
         opened = false;
         selectedOptionText.text = text;
         SelectedIndex = index;
+        SelectedOptionText = text;
         DestroyOptions();
+        OnValueChanged?.Invoke(SelectedIndex);
     }
 
     public void DestroyOptions() {
@@ -41,6 +47,10 @@ public class CustomDropdown : MonoBehaviour, IPointerUpHandler, IPointerDownHand
     }
 
     public void OnPointerUp(PointerEventData eventData) {
+        if (!Interactable) {
+            return;
+        }
+
         opened = !opened;
         if (!opened) DestroyOptions();
         else SpawnOptions();
@@ -48,5 +58,12 @@ public class CustomDropdown : MonoBehaviour, IPointerUpHandler, IPointerDownHand
 
     public void OnPointerDown(PointerEventData eventData) {
         // Without OnPointerDown, OnPointerUp is not working
+    }
+
+    public void SetSelectedIndex(int index) {
+        SelectedIndex = index;
+        SelectedOptionText = options[index];
+        selectedOptionText.text = SelectedOptionText;
+        OnValueChanged?.Invoke(SelectedIndex);
     }
 }

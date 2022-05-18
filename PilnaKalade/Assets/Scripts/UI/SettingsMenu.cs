@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public Toggle FullscreenToggle;
+    //public Toggle FullscreenToggle;
+    public CustomCheckbox FullscreenToggle;
 
-    public Dropdown ResolutionDropdown;
+    //public Dropdown ResolutionDropdown;
+    public CustomDropdown ResolutionDropdown;
 
     private Settings _activeSettings;
     private bool _toggleEmittedFirstEvent;
@@ -41,7 +43,7 @@ public class SettingsMenu : MonoBehaviour
 
     public void ChangeResolution()
     {
-        var resolutionText = ResolutionDropdown.options[ResolutionDropdown.value].text;
+        var resolutionText = ResolutionDropdown.SelectedOptionText;
         var parts = resolutionText.Split(' ');
         
         var newWidth = Convert.ToInt32(parts[0]);
@@ -72,15 +74,15 @@ public class SettingsMenu : MonoBehaviour
             _toggleEmittedFirstEvent = false;
         }
 
-        FullscreenToggle.isOn = _activeSettings.IsFullscreen;
+        FullscreenToggle.SetToggle(_activeSettings.IsFullscreen);
     }
 
     private void InitResolutionDropdown()
     {
         var resolutionString = $"{_activeSettings.WindowWidth} x {_activeSettings.WindowHeight}";
 
-        ResolutionDropdown.interactable = false;
-        ResolutionDropdown.value = ResolutionDropdown.options.FindIndex(option => option.text == resolutionString);
-        ResolutionDropdown.interactable = true;
+        ResolutionDropdown.Interactable = false;
+        ResolutionDropdown.SetSelectedIndex(ResolutionDropdown.options.FindIndex(option => option == resolutionString));
+        ResolutionDropdown.Interactable = true;
     }
 }

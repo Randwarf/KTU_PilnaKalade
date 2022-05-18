@@ -28,6 +28,8 @@ public class CardManager : MonoBehaviour
 
         foreach(var card in cards)
             card.onUse.AddListener(OnCardUse);
+
+        DrawNewHand(defaultHandSize);
     }
 
     public void DrawNewHand()
@@ -45,10 +47,12 @@ public class CardManager : MonoBehaviour
     private void DrawNewCard()
     {
         GameObject card = Instantiate(cardPrefab, hand.transform);
-        card.transform.localScale = card.transform.localScale * 0.15f;
+        //card.transform.localScale = card.transform.localScale * 0.15f;
 
-        var cardComponent = card.GetComponent<Card>();
+        var cardComponent = card.GetComponent<GameCard>();
+
         cardComponent.onUse.AddListener(OnCardUse);
+        cardComponent.UpdateVisuals();
     }
 
     private void DiscardHand()
@@ -57,14 +61,14 @@ public class CardManager : MonoBehaviour
             Destroy(child.gameObject);
 
         NoCardsDrawnAfterDiscard = true;
-        onNoCardsDrawnAfterDiscardChange.Invoke();
+        onNoCardsDrawnAfterDiscardChange?.Invoke();
     }
 
     private void OnCardUse(CardData cardData)
     {
         NoCardsDrawnAfterDiscard = false;
-        onNoCardsDrawnAfterDiscardChange.Invoke();
+        onNoCardsDrawnAfterDiscardChange?.Invoke();
 
-        OnCardEndUse.Invoke(cardData);
+        OnCardEndUse?.Invoke(cardData);
     }
 }
