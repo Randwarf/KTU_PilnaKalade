@@ -34,7 +34,7 @@
 	{
 		"key": 2,
 		"name": "Orc",
-		"maxHealth": 125,
+		"maxHealth": 100,
 		"level": 3,
 		"Attacks": [
 			{
