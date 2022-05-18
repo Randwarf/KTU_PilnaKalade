@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class StatsController : MonoBehaviour
 {
-    public StatusSpawner Spawner;
+    //public StatusSpawner Spawner;
 
     public Bar DefenseBar;
     public Bar HealthBar;
     public Bar ManaBar;
 
-    public void SpawnEffect(StatusEffectType type)
-    {
-        Spawner.SpawnEffect(type);
-    }
+    //public void SpawnEffect(StatusEffectType type)
+    //{
+    //    Spawner.SpawnEffect(type);
+    //}
 
     public void ClearEffects()
     {
-        Spawner.ClearEffects();
+        //Spawner.ClearEffects();
     }
 
     public void ConfirmPredictionPoints()

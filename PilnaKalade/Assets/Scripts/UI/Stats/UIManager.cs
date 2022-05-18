@@ -32,7 +32,7 @@ namespace Assets.Scripts.UI.Stats
 
         public void SpawnPoisonEffect(StatusEffectType type)
         {
-            EnemyStatsController.SpawnEffect(type);
+            //EnemyStatsController.SpawnEffect(type);
         }
 
         public void ShowPredictionDamagePoints(int potentialNextTurnDamagePoints, bool updatePlayer)

@@ -160,13 +160,13 @@ namespace Assets.Scripts.GameCore.Players
         private void AddListeners()
         {
             GameObject.FindWithTag("NextTurnButton")
-                .GetComponent<Button>()
-                .onClick
+                .GetComponent<CustomButton>()
+                .OnPressed
                 .AddListener(OnNextTurnConfirmState);
 
             GameObject.FindWithTag("ExhaustButton")
-                .GetComponent<Button>()
-                .onClick
+                .GetComponent<CustomButton>()
+                .OnPressed
                 .AddListener(OnExhaustClearPoison);
 
             _cardManager.OnCardEndUse.AddListener(UpdateState);
