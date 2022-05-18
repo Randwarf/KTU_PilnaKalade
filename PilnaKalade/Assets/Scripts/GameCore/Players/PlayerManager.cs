@@ -7,11 +7,15 @@ namespace Assets.Scripts.GameCore.Players
 {
     public class PlayerManager : MonoBehaviour
     {
+        private const bool UpdateEnemy = false;
+        private const bool UpdatePlayer = true;
+
         private Player _player;
         private Player _enemyPlayer;
+        private EnemyData _enemyData;
 
-        private bool _playerTurn;
         private int _previousMana;
+        private int _appliedPoisonDamage;
 
         private UIManager _uiManager;
 
@@ -19,77 +23,15 @@ namespace Assets.Scripts.GameCore.Players
 
         void Start()
         {
-            _playerTurn = true;
-
-             GameObject.FindWithTag("NextTurnButton")
-                .GetComponent<CustomButton>()
-                .OnPressed
-                .AddListener(ConfirmState);
-
-            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            _enemyPlayer = GameObject.FindWithTag("Enemy").GetComponent<Player>();
-
-            _uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
-
-            _cardManager = GameObject.FindWithTag("CardManager").GetComponent<CardManager>();
-            _cardManager.OnCardEndUse.AddListener(UpdateState);
-
-            _player.Defense = Game.DefaultEnemyDefense;
-            _player.Health = Game.DefaultEnemyHealth;
-            _player.Mana = Game.DefaultPlayerMana;
-            _enemyPlayer.Defense = Game.DefaultPlayerDefense;
-            _enemyPlayer.Health = Game.DefaultPlayerHealth;
-
-            _previousMana = _player.Mana;
-
-            _uiManager.InitBarValues(_player.Defense, _player.Health, _player.Mana, true);
-            _uiManager.InitBarValues(_enemyPlayer.Defense, _enemyPlayer.Health, _enemyPlayer.Mana, false);
+            GetComponents();
+            InitPlayers();
+            AddListeners();
         }
 
         private void UpdateState(CardData cardData)
         {
-            var damage = Game.DefaultDamage * cardData.stats.damagemultiplier;
-            _enemyPlayer.takeDamage(damage);
-
-            _uiManager.ShowPredictionDamagePoints(damage, _playerTurn);
-            _uiManager.ShowPredictionManaPoints(cardData.cost, _playerTurn);
-
-            _player.Mana -= cardData.cost;
-        }
-
-        private void ConfirmState()
-        {
-            _uiManager.ConfirmPredictionPoints(_playerTurn);
-
-
-
-            // Could put enemy behaviour logic here
-            // Temporary demo
-            _playerTurn = !_playerTurn; // End player turn, start enemy turn
-            
-            var randomDamage = Random.Range(10, 50);
-            _player.takeDamage(randomDamage);
-
-            _uiManager.ShowPredictionDamagePoints(randomDamage, _playerTurn);
-            _uiManager.ConfirmPredictionPoints(_playerTurn);
-
-            _playerTurn = !_playerTurn; // End enemy turn, start player turn
-
-            //check if enemy died
-            if (_enemyPlayer.Health <= 0 && _player.Health > 0)
-            {
-                _uiManager.Victory();
-            }
-
-            //check if player died
-            if (_player.Health <= 0)
-            {
-                _uiManager.Defeat();
-            }
-
-            // Reseting mana
-            _player.Mana = _previousMana;
-            _uiManager.InitPlayerBarValue(_previousMana, BarType.Mana);
+            DoDamageToEnemy(cardData);
+            DecreasePlayerMana(cardData);
         }
 
         public bool CanPlaceCard(CardData cardData)
@@ -97,9 +39,186 @@ namespace Assets.Scripts.GameCore.Players
             return _player.Mana >= cardData.cost;
         }
 
-        private Player GetPlayer(bool playerTurn)
+        private void OnExhaustClearPoison()
         {
-            return playerTurn ? _enemyPlayer : _player;
+            _enemyPlayer.ClearPoison();
+            
+            // Resetting damage received from poison
+            var diff = Game.DefaultEnemyHealth - _enemyPlayer.Health;
+            var defense = _appliedPoisonDamage - diff;
+
+            if(defense < 0)
+            {
+                defense = 0;
+            }
+
+            _enemyPlayer.Defense += defense;
+            _enemyPlayer.Health += _appliedPoisonDamage - defense;
+            _appliedPoisonDamage = 0;
+            
+            _uiManager.ClearEnemyStatusEffects();
+
+            _uiManager.EnemyStatsController.SetBarValue(_enemyPlayer.Defense, BarType.Defense);
+            _uiManager.EnemyStatsController.SetBarValue(_enemyPlayer.Health, BarType.Defense);
+        }
+
+        private void OnNextTurnConfirmState()
+        {
+            // Update stats for enemy
+            _uiManager.ConfirmPredictionPoints(UpdateEnemy);
+
+            // Update player stats
+            _uiManager.ConfirmPredictionPoints(UpdatePlayer);
+
+            if (_enemyPlayer.Health <= 0)
+            {
+                _uiManager.Victory();
+                return;
+            }
+
+            ProcessEnemyMove();
+
+            if (_player.Health <= 0)
+            {
+                _uiManager.Defeat();
+                return;
+            }
+
+            ResetPlayerMana();
+
+            // Update poison stats for enemy
+            _appliedPoisonDamage = _enemyPlayer.ApplyPoisonDamage();
+            _uiManager.ShowPredictionDamagePoints(_appliedPoisonDamage, UpdateEnemy);
+        }
+
+        private void ProcessEnemyMove()
+        {
+            var action = _enemyData.getNextAttack();
+            DoDamageToPlayer(action.damage);
+            HealEnemy(action.heal);
+            ShieldEnemy(action.shield);
+        }
+
+        private void ShieldEnemy(int shield)
+        {
+            _enemyPlayer.Defense += shield;
+            if(_enemyPlayer.Defense > Game.DefaultEnemyDefense)
+            {
+                _enemyPlayer.Defense = Game.DefaultEnemyDefense;
+            }
+
+            _uiManager.EnemyStatsController.SetBarValue(_enemyPlayer.Defense, BarType.Defense);
+        }
+
+        private void HealEnemy(int heal)
+        {
+            _enemyPlayer.Health += heal;
+
+            if (_enemyPlayer.Health > _enemyData.maxHealth)
+            {
+                _enemyPlayer.Health = _enemyData.maxHealth;
+            }
+
+            _uiManager.EnemyStatsController.SetBarValue(_enemyPlayer.Health, BarType.Health);
+        }
+
+        private void ResetPlayerMana()
+        {
+            _player.Mana = _previousMana;
+            _uiManager.InitPlayerBarValue(_previousMana, BarType.Mana);
+        }
+
+        private void InitPlayers()
+        {
+            _player.Defense = Game.DefaultPlayerDefense;
+            _player.Health = Game.DefaultPlayerHealth;
+            _player.Mana = Game.DefaultPlayerMana;
+
+            _enemyData = EnemyDatabase.getRandomEnemyData();
+            _enemyPlayer.Defense = Game.DefaultPlayerDefense;
+            _enemyPlayer.Health = _enemyData.maxHealth;
+
+            _previousMana = _player.Mana;
+            _appliedPoisonDamage = 0;
+
+            _uiManager.InitBarValues(_player.Defense, _player.Health, _player.Mana, UpdatePlayer);
+            _uiManager.InitBarValues(_enemyPlayer.Defense, _enemyPlayer.Health, _enemyPlayer.Mana, UpdateEnemy);
+            //Turbūt būtų tikslinga defense = 0 padaryt pradžioje, o tik po to auga tiek player tiek enemy
+
+            //Show enemy's first move
+            var move = _enemyData.getNextAttack();
+            DoDamageToPlayer(move.damage);
+        }
+
+        private void GetComponents()
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+            _enemyPlayer = GameObject.FindWithTag("Enemy").GetComponent<Player>();
+            _uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+            _cardManager = GameObject.FindWithTag("CardManager").GetComponent<CardManager>();
+        }
+
+        private void AddListeners()
+        {
+            GameObject.FindWithTag("NextTurnButton")
+                .GetComponent<CustomButton>()
+                .OnPressed
+                .AddListener(OnNextTurnConfirmState);
+
+            GameObject.FindWithTag("ExhaustButton")
+                .GetComponent<CustomButton>()
+                .OnPressed
+                .AddListener(OnExhaustClearPoison);
+
+            _cardManager.OnCardEndUse.AddListener(UpdateState);
+        }
+
+        private void IfExistsAddPoisonToEnemy(CardData cardData)
+        {
+            if (cardData.stats.poisonDamagePerTurn == 0)
+            {
+                return;
+            }
+
+            _enemyPlayer.AddPoison(cardData.stats.poisonDamagePerTurn);
+
+            SpawnPoison(cardData.stats.poisonDamagePerTurn);
+        }
+
+        private void SpawnPoison(int poisonDamagePoints)
+        {
+            if (poisonDamagePoints > 10)
+            {
+                _uiManager.SpawnPoisonEffect(StatusEffectType.PoisonMedium);
+            }
+            else
+            {
+                _uiManager.SpawnPoisonEffect(StatusEffectType.PoisonLow);
+            }
+        }
+
+        private void DoDamageToEnemy(CardData cardData)
+        {
+            IfExistsAddPoisonToEnemy(cardData);
+
+            var damage = Game.DefaultDamage * cardData.stats.damagemultiplier;
+            _enemyPlayer.takeDamage(damage);
+
+            _uiManager.ShowPredictionDamagePoints(damage, UpdateEnemy);
+            _uiManager.ShowPredictionManaPoints(cardData.cost, UpdateEnemy);
+        }
+
+        private void DoDamageToPlayer(int damage)
+        {
+            _player.takeDamage(damage);
+
+            _uiManager.ShowPredictionDamagePoints(damage, UpdatePlayer);
+        }
+
+        private void DecreasePlayerMana(CardData cardData)
+        {
+            _player.Mana -= cardData.cost;
+            _uiManager.ShowPredictionManaPoints(cardData.cost, UpdatePlayer);
         }
     }
 }

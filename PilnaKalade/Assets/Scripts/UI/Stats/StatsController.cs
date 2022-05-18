@@ -3,16 +3,21 @@ using UnityEngine;
 
 public class StatsController : MonoBehaviour
 {
-    //public StatusSpawner Spawner;
+    public StatusSpawner? Spawner;
 
     public Bar DefenseBar;
     public Bar HealthBar;
     public Bar ManaBar;
 
-    //public void SpawnEffect(StatusEffectType type)
-    //{
-    //    Spawner.SpawnEffect(type);
-    //}
+    public void SpawnEffect(StatusEffectType type)
+    {
+        Spawner.SpawnEffect(type);
+    }
+
+    public void ClearEffects()
+    {
+        Spawner.ClearEffects();
+    }
 
     public void ConfirmPredictionPoints()
     {
@@ -49,7 +54,12 @@ public class StatsController : MonoBehaviour
     {
         GetBar(type).MaxValue = maxValue;
     }
-    
+
+    public void SetBarValue(int value, BarType type)
+    {
+        GetBar(type).Value = value;
+    }
+
     private void IncreaseBarValue(int value, BarType type)
     {
         GetBar(type).Value += value;
