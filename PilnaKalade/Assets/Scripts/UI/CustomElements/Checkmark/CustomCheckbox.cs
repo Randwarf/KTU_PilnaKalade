@@ -4,16 +4,11 @@ using UnityEngine.EventSystems;
 
 public class CustomCheckbox : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
-    public bool isOn { get; private set; }
+    public bool isOn { get; set; } = true;
 
     public GameObject Checkmark;
 
     public UnityEvent OnValueChanged;
-
-    private void Start() {
-        isOn = true;
-        Checkmark.SetActive(isOn);
-    }
 
     public void OnPointerUp(PointerEventData eventData) {
         isOn = !isOn;
@@ -23,6 +18,11 @@ public class CustomCheckbox : MonoBehaviour, IPointerUpHandler, IPointerDownHand
 
     public void OnPointerDown(PointerEventData eventData) {
         // Without OnPointerDown, OnPointerUp is not working
+    }
+
+    public void SetToggleWithoutEffects(bool value) {
+        isOn = value;
+        Checkmark.SetActive(value);
     }
 
     public void SetToggle(bool value) {

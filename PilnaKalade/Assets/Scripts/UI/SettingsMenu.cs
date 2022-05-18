@@ -30,13 +30,13 @@ public class SettingsMenu : MonoBehaviour
     public void ToggleFullscreen()
     {
         // Have to interrupt first call to this function, because toggle emits unnecessary onValueChange event on initialization
-        if (!_toggleEmittedFirstEvent)
-        {
-            _toggleEmittedFirstEvent = true;
-            return;
-        }
+        //if (!_toggleEmittedFirstEvent)
+        //{
+        //    _toggleEmittedFirstEvent = true;
+        //    return;
+        //}
 
-        _activeSettings.IsFullscreen = !_activeSettings.IsFullscreen;
+        _activeSettings.IsFullscreen = FullscreenToggle.isOn;
 
         SettingsController.UpdateSettings(_activeSettings);
     }
@@ -65,16 +65,15 @@ public class SettingsMenu : MonoBehaviour
 
     private void InitToggle()
     {
-        if(FullscreenToggle.isOn == _activeSettings.IsFullscreen)
-        {
-            _toggleEmittedFirstEvent = true;
-        }
-        else
-        {
-            _toggleEmittedFirstEvent = false;
-        }
-
-        FullscreenToggle.SetToggle(_activeSettings.IsFullscreen);
+        //if(FullscreenToggle.isOn == _activeSettings.IsFullscreen)
+        //{
+        //    _toggleEmittedFirstEvent = true;
+        //}
+        //else
+        //{
+        //    _toggleEmittedFirstEvent = false;
+        //}
+        FullscreenToggle.SetToggleWithoutEffects(_activeSettings.IsFullscreen);
     }
 
     private void InitResolutionDropdown()
