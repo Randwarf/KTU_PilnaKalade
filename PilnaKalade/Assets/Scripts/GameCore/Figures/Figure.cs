@@ -48,7 +48,9 @@ public class Figure : MonoBehaviour
             return false;
         }
 
-        grid.PlaceTiles(GetSelectedGridTiles(), Color.red);
+        //grid.PlaceTiles(GetSelectedGridTiles(), Color.red);
+        grid.PlaceTiles(GetSelectedGridTiles(), Random.ColorHSV());
+
         return true;
     }
 
