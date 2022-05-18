@@ -24,7 +24,7 @@
 			{
 				"name": "Munch",
 				"weight": 10,
-				"damage": 10,
+				"damage": 30,
 				"heal": 0,
 				"shield": 0
 			}
@@ -40,7 +40,7 @@
 			{
 				"name": "Smash",
 				"weight": 20,
-				"damage": 10,
+				"damage": 30,
 				"heal": 0,
 				"shield": 0
 			},
@@ -64,7 +64,7 @@
 			{
 				"name": "Bite",
 				"weight": 20,
-				"damage": 10,
+				"damage": 30,
 				"heal": 10,
 				"shield": 0
 			},
