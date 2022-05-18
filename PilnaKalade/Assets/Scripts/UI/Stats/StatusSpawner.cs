@@ -16,14 +16,6 @@ public class StatusSpawner : MonoBehaviour
         _childrenCount = StatusContainer.childCount;
     }
 
-    private void Update()
-    {
-        if(_childrenCount > StatusContainer.childCount)
-        {
-            RecalculateChildrenPositions();
-        }
-    }
-
     public void ClearEffects()
     {
         for (var i = 1; i < StatusContainer.childCount; i++)
@@ -43,10 +35,9 @@ public class StatusSpawner : MonoBehaviour
 
         if(StatusContainer.childCount == 1) // StatusSpawner is container's child
         {
-            var firstEffect = Instantiate(effectPrefab, StatusContainer.position, Quaternion.identity);
+            var firstEffect = Instantiate(effectPrefab);
             firstEffect.transform.SetParent(StatusContainer, false);
-            firstEffect.transform.position = transform.position;
-            
+            firstEffect.GetComponent<RectTransform>().localPosition = GetNextAnchoredPositionFromChild(firstEffect.transform);
             _childrenCount = StatusContainer.childCount;
             
             return;
@@ -56,30 +47,7 @@ public class StatusSpawner : MonoBehaviour
 
         var effect = Instantiate(effectPrefab);
         effect.transform.SetParent(StatusContainer, false);
-        effect.GetComponent<RectTransform>().anchoredPosition = GetNextAnchoredPositionFromChild(prevChild);
-
-        _childrenCount = StatusContainer.childCount;
-    }
-    
-    private void RecalculateChildrenPositions()
-    {
-        Transform prevChild = null;
-
-        for (var i = 1; i < StatusContainer.childCount; i++)
-        {
-            var child = StatusContainer.GetChild(i);
-
-            if (prevChild == null)
-            {
-                child.position = transform.position;
-            }
-            else
-            {
-                child.GetComponent<RectTransform>().anchoredPosition = GetNextAnchoredPositionFromChild(prevChild);
-            }
-
-            prevChild = child;
-        }
+        effect.GetComponent<RectTransform>().localPosition = GetNextAnchoredPositionFromChild(prevChild);
 
         _childrenCount = StatusContainer.childCount;
     }
@@ -88,7 +56,7 @@ public class StatusSpawner : MonoBehaviour
     {
         var prevChildRectTransform = child.GetComponent<RectTransform>();
 
-        return new Vector2(prevChildRectTransform.anchoredPosition.x + prevChildRectTransform.rect.width + RightPadding,
-            prevChildRectTransform.anchoredPosition.y);
+        return new Vector2(prevChildRectTransform.localPosition.x + prevChildRectTransform.rect.width + RightPadding,
+            prevChildRectTransform.localPosition.y);
     }
 }
