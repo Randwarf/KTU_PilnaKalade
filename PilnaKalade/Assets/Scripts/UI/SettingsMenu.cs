@@ -73,8 +73,6 @@ public class SettingsMenu : MonoBehaviour
         //{
         //    _toggleEmittedFirstEvent = false;
         //}
-
-        Debug.Log(_activeSettings.IsFullscreen);
         FullscreenToggle.SetToggleWithoutEffects(_activeSettings.IsFullscreen);
     }
 

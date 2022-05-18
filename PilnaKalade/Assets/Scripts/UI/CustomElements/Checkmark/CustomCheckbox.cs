@@ -21,7 +21,6 @@ public class CustomCheckbox : MonoBehaviour, IPointerUpHandler, IPointerDownHand
     }
 
     public void SetToggleWithoutEffects(bool value) {
-        Debug.Log($"Got value {value}");
         isOn = value;
         Checkmark.SetActive(value);
     }

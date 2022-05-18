@@ -35,7 +35,7 @@ public class BattleSettings : MonoBehaviour
         //}
 
         _activeSettings.IsFullscreen = FullscreenToggle.isOn;
-        Debug.Log(_activeSettings.IsFullscreen);
+
         SettingsController.UpdateSettings(_activeSettings);
     }
 
@@ -71,7 +71,6 @@ public class BattleSettings : MonoBehaviour
         //{
         //    _toggleEmittedFirstEvent = false;
         //}
-        Debug.Log(_activeSettings.IsFullscreen);
         FullscreenToggle.SetToggleWithoutEffects(_activeSettings.IsFullscreen);
     }
 
