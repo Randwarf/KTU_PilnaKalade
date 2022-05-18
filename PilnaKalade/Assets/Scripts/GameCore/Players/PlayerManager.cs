@@ -57,7 +57,9 @@ namespace Assets.Scripts.GameCore.Players
             _appliedPoisonDamage = 0;
             
             _uiManager.ClearEnemyStatusEffects();
-            //_uiManager.CancelPredictionPoints(UpdateEnemy);
+
+            _uiManager.EnemyStatsController.SetBarValue(_enemyPlayer.Defense, BarType.Defense);
+            _uiManager.EnemyStatsController.SetBarValue(_enemyPlayer.Health, BarType.Defense);
         }
 
         private void OnNextTurnConfirmState()
@@ -66,7 +68,7 @@ namespace Assets.Scripts.GameCore.Players
             _uiManager.ConfirmPredictionPoints(UpdateEnemy);
 
             // Update player stats
-            _uiManager.ConfirmPredictionPoints(!UpdateEnemy);
+            _uiManager.ConfirmPredictionPoints(UpdatePlayer);
 
             if (_enemyPlayer.Health <= 0)
             {
@@ -111,13 +113,11 @@ namespace Assets.Scripts.GameCore.Players
         private void HealEnemy(int heal)
         {
             _enemyPlayer.Health += heal;
+
             if (_enemyPlayer.Health > _enemyData.maxHealth)
             {
                 _enemyPlayer.Health = _enemyData.maxHealth;
             }
-
-            Debug.Log(heal);
-            Debug.Log(_enemyPlayer.Health);
 
             _uiManager.EnemyStatsController.SetBarValue(_enemyPlayer.Health, BarType.Health);
         }
