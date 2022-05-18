@@ -10,8 +10,8 @@ public class OnStart : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("musicVolume"))
         {
-            PlayerPrefs.SetFloat("musicVolume", 1);
-            AudioListener.volume = 1;
+            PlayerPrefs.SetFloat("musicVolume", 0.04f);
+            AudioListener.volume = 0.04f;
         }
         else
         {
