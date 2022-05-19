@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.UI.Stats
 {
@@ -8,6 +10,7 @@ namespace Assets.Scripts.UI.Stats
         public StatsController PlayerStatsController;
         public GameObject VictoryScreen;
         public GameObject DefeatScreen;
+        public GameObject CardSelectPrefab;
 
         public void InitBarValues(int maxDefenseValue, int maxHealthValue, int maxManaValue, bool updatePlayer)
         {
@@ -68,6 +71,14 @@ namespace Assets.Scripts.UI.Stats
             }
 
             return PlayerStatsController;
+        }
+
+        public void CardSelect(UnityAction onSelected)
+        {
+            var gameObject = GameObject.Instantiate(CardSelectPrefab);
+            CardSelectScreen cardSelectScreen = gameObject.GetComponent<CardSelectScreen>();
+
+            cardSelectScreen.OnSelected.AddListener(onSelected);
         }
 
         public void Victory()
