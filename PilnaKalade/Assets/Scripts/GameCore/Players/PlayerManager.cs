@@ -21,6 +21,8 @@ namespace Assets.Scripts.GameCore.Players
 
         private CardManager _cardManager;
 
+        private bool _gameEnded = false;
+
         void Start()
         {
             GetComponents();
@@ -64,6 +66,9 @@ namespace Assets.Scripts.GameCore.Players
 
         private void OnNextTurnConfirmState()
         {
+            if(_gameEnded)
+                return;
+
             // Update stats for enemy
             _uiManager.ConfirmPredictionPoints(UpdateEnemy);
 
@@ -72,7 +77,11 @@ namespace Assets.Scripts.GameCore.Players
 
             if (_enemyPlayer.Health <= 0)
             {
-                _uiManager.Victory();
+                _gameEnded = true;
+
+                _uiManager.CardSelect(() => {
+                    _uiManager.Victory();
+                });
                 return;
             }
 
@@ -80,7 +89,11 @@ namespace Assets.Scripts.GameCore.Players
 
             if (_player.Health <= 0)
             {
-                _uiManager.Defeat();
+                _gameEnded = true;
+
+                _uiManager.CardSelect(() => {
+                    _uiManager.Defeat();
+                });
                 return;
             }
 

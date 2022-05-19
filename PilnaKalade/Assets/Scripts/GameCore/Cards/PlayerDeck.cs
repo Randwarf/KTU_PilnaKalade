@@ -8,12 +8,9 @@ public static class PlayerDeck
 
     public static void LoadIfUnloaded() {
         if(deck.Count == 0) {
-            CardDatabase.LoadCards();
-            int count = CardDatabase.GetCount();
             for (int i = 0; i < 20; i++)
             {
-                deck.Add(CardDatabase.GetCard(
-                    Random.Range(0, count)));
+                deck.Add(CardDatabase.GetRandomCard());
             }
         }
     }

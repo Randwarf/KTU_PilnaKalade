@@ -6745,6 +6745,7 @@ MonoBehaviour:
   PlayerStatsController: {fileID: 1593046922}
   VictoryScreen: {fileID: 4760648919956299109, guid: 52d216c64a9185c44b3385badd87795c, type: 3}
   DefeatScreen: {fileID: 3782386462588174439, guid: c40b4457bbd907f4fb4743ea96766b9b, type: 3}
+  CardSelectPrefab: {fileID: 7634506233971598464, guid: a85a592251ba16b439f671e7e05ad5c3, type: 3}
 --- !u!4 &966224647
 Transform:
   m_ObjectHideFlags: 0
