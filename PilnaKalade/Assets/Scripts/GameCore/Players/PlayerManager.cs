@@ -23,7 +23,7 @@ namespace Assets.Scripts.GameCore.Players
 
         private bool _gameEnded = false;
 
-        void Start()
+        public void Start()
         {
             GetComponents();
             InitPlayers();
@@ -91,9 +91,8 @@ namespace Assets.Scripts.GameCore.Players
             {
                 _gameEnded = true;
 
-                _uiManager.CardSelect(() => {
-                    _uiManager.Defeat();
-                });
+                _uiManager.Defeat();
+
                 return;
             }
 
@@ -143,6 +142,7 @@ namespace Assets.Scripts.GameCore.Players
 
         private void InitPlayers()
         {
+            OnExhaustClearPoison();
             _player.Defense = Game.DefaultPlayerDefense;
             _player.Health = Game.DefaultPlayerHealth;
             _player.Mana = Game.DefaultPlayerMana;

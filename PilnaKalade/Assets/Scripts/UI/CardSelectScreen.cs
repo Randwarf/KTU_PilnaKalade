@@ -46,8 +46,8 @@ public class CardSelectScreen : MonoBehaviour
     public void OnCardClick(int index) 
     {
         var selectedCard = DrawnCards[index];
-
-        CardDatabase.AddNewCard(selectedCard);
+        PlayerDeck.AddCard(selectedCard);
+        //CardDatabase.AddNewCard(selectedCard);
 
         OnSelected.Invoke();
         Destroy(gameObject);
